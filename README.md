@@ -10,7 +10,16 @@ Sistema de diseño compartido por las tools internas de Marketing iseazy. Define
 
 ## Para conectar tu tool al design system
 
-Si estás desarrollando una tool interna isEazy y quieres que se vea coherente con el resto del equipo, **copia este mensaje y pégalo a tu Claude Code** dentro del proyecto de tu tool:
+Hay dos escenarios distintos. Elige el tuyo:
+
+- **A.** Estás arrancando una **tool nueva** desde cero.
+- **B.** Tienes una **tool ya hecha** con pantallas existentes y quieres adaptarlas al branding isEazy.
+
+En ambos casos, el primer paso es el mismo: **instalar el sistema** (crea reglas en tu proyecto, no toca tu código). Después, si es el caso B, hay un segundo mensaje opcional que dispara la auditoría y migración.
+
+### A · Tool nueva (instalación limpia)
+
+Abre tu Claude Code en el proyecto de tu tool y **copia este mensaje**:
 
 ```
 Instala el design system isEazy en este proyecto. Para hacerlo, hace WebFetch
@@ -18,15 +27,53 @@ a https://raw.githubusercontent.com/factory-iseazy/iseazy-design-system/main/REA
 y sigue exactamente las instrucciones que verás en la sección "Si eres Claude Code".
 ```
 
-Eso es todo. Tu Claude Code:
+Tu Claude Code:
 
 1. Leerá las instrucciones de este README
 2. Creará un archivo `CLAUDE.md` en tu proyecto con las reglas del sistema
-3. Te confirmará "Listo, sistema instalado"
+3. Te confirmará *"Listo, sistema instalado"*
 
-A partir de ese momento, cuando le pidas pantallas, componentes, layouts o cualquier output visual, tu Claude consultará automáticamente el `DESIGN.md` del repo y aplicará las reglas. Tú trabajas como siempre — solo notarás que las pantallas salen alineadas con el branding.
+A partir de ese momento, cuando le pidas pantallas, componentes, layouts o cualquier output visual, tu Claude consultará automáticamente el `DESIGN.md` y aplicará las reglas. Tú trabajas como siempre — solo notarás que las pantallas salen alineadas con el branding.
 
-### Qué obtienes después de instalar
+### B · Tool existente (instalación + migración)
+
+Primero **instalas el sistema** con el mismo mensaje del caso A (solo crea el `CLAUDE.md` con las reglas, no toca tu código existente — es seguro).
+
+Cuando te confirme la instalación, **copia este segundo mensaje** al mismo Claude:
+
+```
+Adapta las pantallas existentes de esta tool al design system isEazy.
+
+1. Lee el CLAUDE.md del proyecto y sigue sus reglas.
+2. Antes de tocar nada, audita el código visual existente (HTML/JSX/CSS):
+   - Colores hardcodeados que no estén en §2 del DESIGN.md
+   - Componentes hechos a mano que duplican lo que ya hay en §5.6 a §5.24
+     (buttons, forms, modales, badges, alerts, etc.)
+   - Pantallas que podrían usar un patrón de bloque del §5.4
+   - Falta de tool-shell (§5.25) envolviendo la app
+   - Tipografía no alineada con la escala nombrada (§3.2)
+   - Iconos de otros sets (heroicons, lucide…) en lugar de Tabler (§5.2)
+3. Devuélveme un plan en formato lista:
+   - Por cada pantalla / componente, qué cambia y qué riesgo tiene
+   - Ordenado de menor a mayor riesgo
+   - Sin tocar todavía nada
+4. Espera mi aprobación. Luego aplica los cambios pantalla por pantalla,
+   no todo de golpe.
+```
+
+Tu Claude:
+
+1. **Auditará primero**, sin tocar — te dará un plan revisable
+2. Esperará tu aprobación
+3. **Migrará pantalla por pantalla** con tu validación entre cada una (puedes pararle, ajustar, seguir)
+
+#### Variantes según lo que quieras migrar
+
+- **Una sola pantalla**: cambia *"las pantallas existentes"* por *"el archivo `src/pages/Dashboard.tsx`"* (o el path concreto). Skip la auditoría global.
+- **Solo colores**: añade *"Mantén la estructura tal cual, solo sustituye los colores hardcodeados por los tokens del §2"*.
+- **Refactor agresivo**: añade *"si encuentras algo que claramente debería usar un patrón del §5.4 en lugar del código actual, propón el refactor"*.
+
+### Qué obtienes en ambos casos
 
 - Paleta de color isEazy (magenta, púrpura, accents de producto, decorative, grises, semantic states)
 - Tipografía Work Sans con escala nombrada
