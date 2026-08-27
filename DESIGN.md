@@ -10,12 +10,15 @@ Cuando cambie la web de iseazy y queramos arrastrar las tools al nuevo branding,
 
 ## Índice
 
+> **¿Tu tool es un dashboard/tool de datos?** (KPIs, gráficas, filtros — test en §13.1)
+> → empieza por **§13 Modo dashboard**: en ese modo, §13 manda sobre §4/§5.
+
 - **§1 Identidad de marca** — [§1.1 Alcance del repo](#11-alcance-del-repo) · [§1.2 Voz](#12-voz)
 - **§2 Tokens de color** — [§2.1 Brand](#21-brand-con-significado) · [§2.2 Variables CSS](#22-variables-css-modo-claro) · [§2.3 Category accents](#23-category-accents-productos) · [§2.4 Decorative palette](#24-decorative-palette-resto-de-colores) · [§2.5 Grey scale](#25-grey-scale) · [§2.6 Text colors](#26-text-colors-alias-semánticos) · [§2.7 Streamlit](#27-streamlit-tools-de-compañeros) · [§2.8 Modo oscuro](#28-modo-oscuro)
 - **§3 Tipografía** — [§3.1 Carga](#31-carga) · [§3.2 Escala nombrada](#32-escala-tipográfica-nombrada) · [§3.3 Combinaciones canónicas](#33-combinaciones-canónicas) · [§3.4 Cheatsheet](#34-aplicación-rápida-cheatsheet)
 - **§4 Layout & sistema visual** — [§4.1 Container & breakpoints](#41-container--breakpoints) · [§4.2 Spacing scale](#42-spacing-scale) · [§4.3 Border-radius scale](#43-border-radius-scale) · [§4.4 Shadows / elevation](#44-shadows--elevation) · [§4.5 Z-index scale](#45-z-index-scale) · [§4.6 Motion](#46-motion) · [§4.7 Focus state global](#47-focus-state-global)
 - **§5 Componentes base** — [§5.1 Convenciones](#51-convenciones-de-componente) · [§5.2 Iconografía](#52-iconografía) · [§5.3 Gráficos](#53-gráficos-recharts) · [§5.4 Patrones de bloque (14)](#54-patrones-de-bloque) · [§5.5 Anti-patrones](#55-anti-patrones-qué-no-copiar-de-las-landings-de-ai-slop) · [§5.6 Buttons](#56-buttons) · [§5.7 Forms](#57-forms-inputs-labels-validación) · [§5.8 Badges, tags & avatars](#58-badges-tags--avatars) · [§5.9 Tooltips](#59-tooltips) · [§5.10 Alerts & Toasts](#510-alerts--toasts) · [§5.11 Modales / Dialogs](#511-modales--dialogs) · [§5.12 Empty states](#512-empty-states) · [§5.13 Loading states](#513-loading-states) · [§5.14 Tables & Pagination](#514-tables--pagination) · [§5.15 Dropdown menus](#515-dropdown-menus) · [§5.16 Popovers](#516-popovers) · [§5.17 Drawer / Sheet](#517-drawer--sheet) · [§5.18 Tabs internas](#518-tabs-internas) · [§5.19 Steppers](#519-steppers--wizards) · [§5.20 Date picker](#520-date-picker) · [§5.21 Combobox](#521-combobox--autocomplete) · [§5.22 Breadcrumbs](#522-breadcrumbs) · [§5.23 Slider](#523-slider) · [§5.24 File upload](#524-file-upload) · [§5.25 Tool shell](#525-tool-shell)
-- **§6 Datos canónicos** · **§7 Accesibilidad** · **§8 Cómo consumir** · **§9 Verificación** · **§10 Playground** · **§11 Assets** · **§12 Utilidades CSS extra**
+- **§6 Datos canónicos** · **§7 Accesibilidad** · **§8 Cómo consumir** · **§9 Verificación** · **§10 Playground** · **§11 Assets** · **§12 Utilidades CSS extra** · **§13 Modo dashboard (tools de datos)**
 
 ---
 
@@ -312,6 +315,8 @@ Permite escribir `text-heading`, `text-body`, `text-subtle`, `text-soft`, `text-
 Regla: **NO usar `text-foreground` / `text-muted-foreground` literal en JSX nuevo**. Usar `text-body` y `text-subtle`. Si ves `text-foreground` en código antiguo, sustituir cuando toques esa zona. Reduce ambigüedad y hace los componentes self-documenting.
 
 ### 2.7 Streamlit (tools de compañeros)
+
+> Si la tool es un **dashboard de datos**, aplica también el modo dashboard: **§13**.
 
 El template Streamlit no consume CSS variables; necesita hex literal. Cada tool debe llevar este `.streamlit/config.toml`:
 
@@ -785,6 +790,8 @@ Reglas:
 
 ### 5.3 Gráficos (recharts)
 
+> **Dashboards**: en modo dashboard esta paleta queda **sustituida por la de §13.3** — la de aquí falla la validación de daltonismo en pares adyacentes (oro ↔ lima, ver evidencia en §13.3).
+
 Para tools React que usen `recharts`, esta es la paleta canónica de series:
 
 ```ts
@@ -1195,6 +1202,8 @@ Convención por patrón: `Qué es` (en abstracto), `Ejemplos de uso` (variados),
 ### 5.5 Anti-patrones (qué NO copiar de las landings de "AI slop")
 
 Estos patrones aparecen en muchas tools recientes (Claude, Notion AI, etc.) y **deben evitarse** en el sistema iseazy interno y en las tools de compañeros:
+
+> **Matiz dashboard**: la prohibición del sidebar (punto 1) es para *navegación*. Un rail de **filtros** en un dashboard de datos está permitido y recomendado — ver **§13.2**. Y los anti-patrones propios de dashboards viven en **§13.8**.
 
 1. **Sidebar permanente fija a la izquierda con avatares circulares y emojis**. Si la app necesita navegación lateral, usar `Layout.tsx` actual (header horizontal). Sidebar solo si pasamos de 8 secciones de primer nivel — entonces consultar.
 2. **Cards rectangulares idénticas todas magenta-bordered, sin variación**. Una pantalla debe mezclar patrones distintos del §5.4 (`category-card` con icono, `media-card` con foto, `quote-card`, `stat-block`, `accordion-list`…) y los iconos coger color de categoría (§2.3). Si todas las cards de una página son iguales, algo va mal.
@@ -1949,6 +1958,8 @@ Indeterminada (sin valor conocido, barra moviéndose):
 
 ### 5.14 Tables & Pagination
 
+> En **dashboards**, el comportamiento de la tabla (orden, paginación, export, totales) lo fija **§13.6**; aquí vive la anatomía visual.
+
 Para datos tabulares densos. Para listas con cards visuales, usar `category-card` o `media-card` (§5.4). La tabla es para escaneabilidad fila a fila.
 
 #### 5.14.1 Estructura base
@@ -2672,12 +2683,14 @@ Taglines oficiales (cuando se necesite expandir en tooltip o landing):
 
 **Como humano** (Hugo, compañeros):
 
+- **¿Vas a construir un dashboard de datos?** → lee **§13** primero; en ese modo §13 manda sobre §4/§5.
 - Cuando arranques una pantalla nueva: lee §1.2 (voz), §3.2 (escala), §5.1 (componentes base) y **§5.4 (patrones de bloque)**. Lee el **meta-principio del §5.4** antes de elegir patrón: los nombres son genéricos a propósito y un patrón sirve para muchos casos de uso. Identifica el shape del contenido, encuentra el patrón cuyo shape coincide, copia su anatomía. Si nada encaja, parar antes de inventar.
 - Cuando dudes si un color tiene significado o es adorno: §2.1 (brand, con significado) vs §2.4 (decorative, sin significado fijo). Si no está en §2, no se usa.
 - Cuando una card "se vea sosa": probablemente le falta el color de categoría del producto (§2.3) o un accent decorativo (§2.4), o estás cayendo en un anti-patrón (§5.5).
 
 **Como Claude Code** (dentro de este repo o de una tool):
 
+- **Antes de nada**: si la tool es un dashboard/tool de datos (test en §13.1), lee **§13** — layout, paleta de gráficas y convenciones propias que mandan sobre §4/§5 en ese modo.
 - Antes de proponer nombres de productos, países, stages o labels: consulta §6. No inventes.
 - Antes de elegir un color: usa una variable CSS (`hsl(var(--primary))`, `bg-accent`, `hsl(var(--accent-{producto}))`, `hsl(var(--deco-{nombre}))`, etc.) o un hex de §2.1/§2.3/§2.4/§5.3. Si necesitas un color que no está en este documento, párate y avisa a Hugo.
 - Antes de componer una pantalla: revisa §5.4 y nombra qué patrón vas a usar para cada bloque. Si propones algo que no está en §5.4, justifícalo y comprueba que no caes en §5.5.
@@ -3054,3 +3067,188 @@ Si las tools consumidoras prefieren no copiar todo este CSS, las alternativas so
 3. **Copy-paste tal cual** (lo más rápido para tools pequeñas y prototipos).
 
 Cualquiera de las tres es válida. La regla: si copias, copia desde **aquí**, no desde el playground — el playground es el preview, el doc es la fuente.
+
+---
+
+## 13. Modo dashboard (tools de datos)
+
+Doctrina específica para tools cuyo contenido principal son **datos que se
+filtran, comparan y exploran** (KPIs, gráficas, tablas). Nacida del primer
+proyecto dashboard de Marketing (2026-08), validada contra datos reales y
+contra un validador de accesibilidad de color — aquí no hay nada especulativo.
+
+**Regla de precedencia**: en modo dashboard, esta sección **manda sobre §4
+(layout) y §5 (componentes/anti-patrones)** donde entren en conflicto. Los
+tokens de color (§2), la tipografía (§3) y los datos canónicos (§6) aplican
+exactamente igual que en cualquier tool.
+
+### 13.1 Cuándo aplica (test de 10 segundos)
+
+¿El usuario abre la tool para **leer y explorar números** (filtrar por fechas o
+dimensiones, comparar periodos, mirar gráficas y tablas)? → modo dashboard.
+¿La tool es una web, landing, formulario o app de flujo (crear, editar,
+tramitar)? → modo web clásico (§4/§5 tal cual).
+
+En caso de duda: si la pantalla principal tiene más de 3 cifras con gráficas y
+un control de fechas, es un dashboard.
+
+### 13.2 Excepciones a las reglas web (overrides)
+
+| Regla web | En modo dashboard |
+|---|---|
+| §5.5.1 — sidebar prohibido | **Rail lateral de FILTROS permitido y recomendado.** La prohibición de §5.5 es para *navegación* (menú de secciones con avatares); un rail de *filtros* (fechas, comparación, dimensiones) es el patrón estándar de dashboard y NO es ese anti-patrón. Anatomía: ~260px, orden fijo periodo (con presets) → comparación → dimensiones con contadores, estado reflejado en la URL. |
+| §4 — spacing generoso de landing | **Densidad de dashboard**: más información por pantalla, alturas de card estables, gráficas con tamaño para leerse (≥380px las principales) — nunca “una gráfica grande + aire”. |
+| §5.4.8 — `stat-block` para cifras | **Jerarquía de KPIs en 3 rangos**: 1 cifra héroe por vista, tiles secundarios (valor + delta + sparkline), y el resto a tabla. Nunca más de ~8 KPIs con el mismo peso visual — 20 tarjetas iguales es un informe, no un dashboard. |
+| Multipágina / navegación por secciones | **Una app de una página con vistas (pestañas)**; los filtros scope-an TODAS las vistas a la vez para que los números siempre cuadren entre sí. |
+| Texto explicativo en superficie | Una línea de descripción por gráfica está bien (qué representa, cómo leerla); los párrafos metodológicos van a tooltips/ⓘ. |
+
+### 13.3 Paleta de gráficas de dashboard (sustituye a §5.3 en este modo)
+
+La paleta de §5.3 **falla la validación de accesibilidad para daltonismo** en
+pares adyacentes: `#DCB01B` (oro) ↔ `#73C13C` (lima) dan ΔE 1,3 en protanopia
+y 13,8 en visión normal (umbral 15) — indistinguibles. En dashboards, donde el
+color de serie carga significado de forma continua, esto es descalificante.
+Paleta categórica corregida (reordenada + oro oscurecido), validada en banda de
+luminancia, separación CVD (ΔE≥8 adyacentes), piso de visión normal (≥15) y
+contraste:
+
+```ts
+export const CHART_DASH = [
+  "#EB1C79", // magenta (1ª serie)
+  "#03A0F4", // sky
+  "#C99A0F", // oro oscurecido (deco-gold ajustado: #DCB01B no pasa)
+  "#6538E0", // violeta
+  "#73C13C", // lima
+  "#89239B", // púrpura medio
+] as const;
+
+export const DASH_DEEMPHASIS = "#D1D1D1";  // serie de contexto/comparación
+export const DASH_SEQ = ["#FDECF4", "#F8B4D0", "#F06BA6", "#EB1C79", "#BC1661", "#670933"]; // magnitud
+```
+
+Reglas:
+
+1. **Máximo 6 series simultáneas**; la cola se pliega a "Otros" (gris), nunca se
+   generan colores nuevos.
+2. **El color sigue a la entidad, no al ranking**: cada canal/país/dimensión
+   recurrente tiene su color FIJO en un mapa en código (mismo canal, mismo color
+   en toda la tool). Productos isEazy: sus accents de §2.3, siempre.
+3. **La serie de comparación** (año anterior, periodo anterior) va SIEMPRE en
+   `DASH_DEEMPHASIS`, nunca en un color de la paleta.
+4. **Verde/rojo solo para estado y deltas** (`--brand-success`/`--brand-destructive`),
+   con el signo ajustado a si subir es bueno.
+5. **Magnitud** (heatmaps, mapas) usa la rampa secuencial `DASH_SEQ` de un solo
+   tono — nunca un arcoíris.
+6. **Nunca doble eje** (dos escalas Y): dos medidas de escala distinta van en
+   dos gráficas o indexadas a base común.
+7. **El texto nunca viste el color de la serie**: etiquetas, valores y leyendas
+   en tokens de texto (§2.6); la identidad la da la marca de color al lado.
+
+### 13.4 Formas de gráfica: cuál usar para cada pregunta (catálogo v1, vivo)
+
+> Catálogo **vivo**: crece desde el primer proyecto dashboard, donde viven las
+> implementaciones de referencia hasta que exista el template compartido. Antes
+> de inventar una forma nueva, comprueba si una de estas responde la pregunta.
+
+| Pregunta de negocio | Forma | Reglas clave |
+|---|---|---|
+| ¿Cómo va X? | **KPI tile** (valor + delta + sparkline) | Delta vs. periodo NOMBRADO; sparkline 12 puntos en gris con el tramo final en acento; cifras proporcionales (tabular-nums solo en columnas). |
+| ¿Voy a plan? | **KPI vs. objetivo** (bullet) | Barra = real, marcador = objetivo, "% del objetivo" rotulado; sin eje de ticks. |
+| ¿Tendencia? | **Serie temporal** | Línea 2px; área ~10% solo con UNA serie; crosshair con tooltip que lista TODAS las series de esa X. |
+| ¿Quién aporta más? | **Ranking de barras** | Barras ≤24px, valor en la punta, Δ coloreado al lado; clic = cross-filter; el panel de su propia dimensión no se auto-filtra (se atenúa). |
+| ¿Dónde se pierde el embudo? | **Embudo con saltos** | La tasa de conversión de cada salto (y su Δ en pp) ANCLADA en la frontera entre pasos — nunca relegada bajo la gráfica. |
+| >7 categorías con varias métricas | **Tabla de datos** | Ver §13.6. |
+| ¿Estacionalidad por dimensión? | **Heatmap** dimensión×mes | Cada fila normalizada a SU máximo (si no, un pico aplasta el resto); valor real en tooltip. |
+| ¿Cómo fluye el volumen? | **Sankey** (p. ej. origen→canal→producto) | Identidad en etiquetas de nodo; enlaces <0,3% se omiten declarándolo. |
+| ¿Distribución geográfica? | **Mapa choropleth** | País real (sin plegar a "resto"); rampa `DASH_SEQ`. |
+| ¿Parte-a-todo? | **Waffle** (100 celdas = 100%) | Nunca pie/tarta: las celdas se cuentan, los ángulos no. |
+| ¿Quién sube/baja en el ranking? | **Bump** / **AreaBump** (con volumen) | Identidad en etiquetas de inicio/fin. |
+| ¿Volumen × conversión? (cuadrantes) | **Scatter** | Eje log con límites EXPLÍCITOS; línea de media; etiqueta las zonas en la descripción. |
+| ¿Qué esconde la media? | **Swarm/BoxPlot** por unidad | Escala log; si se muestrea, se declara. |
+| ¿Composición jerárquica de importe? | **Treemap** | Área = importe; color = grupo padre. |
+| ¿Perfil multi-métrica comparado? | **Radar** | Máximo 4 series. |
+
+Regla general: **la forma primero, el color después**. Y si la pregunta se
+responde con un número, es un tile — no una gráfica.
+
+### 13.5 Convenciones de dato en pantalla
+
+- **Deltas**: ratios y tasas en **pp** (puntos); volúmenes e importes en **%
+  relativo**. Signo siempre; 0 no es un empeoramiento.
+- **Semáforos** con umbral documentado en la propia UI (tooltip o subtítulo).
+- **Honestidad de las tarjetas de insight**: el color y el título respetan el
+  SIGNO real del dato (la "mayor subida" de un grupo que cae entero es una
+  "menor caída", y no se pinta verde).
+- Formato numérico: §6.4 (es-ES). "—" solo cuando el dato NO aplica.
+- Los buckets "Sin dato"/"Sin canal" **nunca se excluyen en silencio**; todo
+  recorte top-N se declara ("Top 10 de 25 — no es la lista completa").
+- La **frescura del dato es visible**: badge con fuente y fecha (en vivo / demo).
+
+### 13.6 Tablas de datos (comportamiento; la anatomía visual es §5.14)
+
+- Ordenables por cabecera; **primer clic DESCENDENTE en columnas numéricas**
+  (expectativa Excel). `aria-sort` siempre.
+- **Paginar solo con >50 filas** (regla de §5.14.3); por debajo, lista completa.
+- **Export CSV siempre disponible** — los dashboards alimentan reporting.
+- Vocabulario de celdas: número / importe / % / delta coloreado / semáforo /
+  barra inline proporcional / sparkline. Números a la derecha con tabular-nums.
+- Fila de totales cuando la tabla es la vista principal de una dimensión, con
+  los buckets "sin dato" incluidos.
+
+### 13.7 Interacción
+
+- **Los filtros scope-an todo**: cada gráfica, tile y tabla de todas las vistas
+  se recalcula contra el mismo corte — los números siempre cuadran entre sí.
+  Filtros por-vista o gráficas "fijadas" son una decisión consciente que debe
+  avisarse en la UI, nunca un accidente.
+- **El estado de los filtros vive en la URL**: cualquier vista es un link
+  compartible que se abre igual.
+- **Clic en una marca = cross-filter** (clic en un país filtra el dashboard);
+  la selección se ve (activo en color, resto atenuado) y se deshace con otro clic.
+- Tooltips: crosshair en líneas (todas las series de esa X en un solo tooltip);
+  por-marca en barras y celdas. El tooltip enriquece, nunca es la única vía a un dato.
+- Al recargar datos se **mantiene el marco** (la vista anterior atenuada), sin
+  skeletons que saltan.
+
+### 13.8 Anti-patrones de dashboard (el §5.5 de este modo)
+
+1. **Scroll infinito de tarjetas idénticas** — 20+ KPIs con el mismo peso visual.
+   Jerarquía de 3 rangos (§13.2) o tabla.
+2. **Doble eje Y** — puede fabricar correlaciones que no existen. Dos gráficas o
+   índice común.
+3. **Párrafos metodológicos en superficie** — a tooltips; en pantalla, una línea.
+4. **Multi-serie sin leyenda** ni etiquetas — la identidad nunca depende solo
+   del color.
+5. **El color de marca como único color de dato** — magenta en todas las
+   gráficas aplana la lectura; usa `CHART_DASH` y los mapas de identidad.
+6. **Pie charts** — waffle (§13.4).
+7. **Recortes silenciosos** — un top-N sin declarar parece la lista completa.
+8. **Tarjeta "positiva" sobre un dato negativo** — ver honestidad (§13.5).
+9. **Paleta inventada** fuera de §13.3/§2 — mismo pecado que inventar tokens.
+10. **Parámetros a mano para probar variantes** — toda variante que se quiera
+    evaluar se monta como control visible en la UI (toggle/selector), nunca
+    como query param que teclear.
+
+### 13.9 Cómo consumir esta sección
+
+**Si estás construyendo un dashboard** (test de §13.1): lee §13.2 y §13.3
+SIEMPRE antes de la primera pantalla; §13.4 al elegir cada gráfica; §13.6 al
+montar una tabla; §13.8 como checklist final — igual que §5.5 en modo web.
+
+| Necesitas | Lee |
+|---|---|
+| Saber si esta sección te aplica | §13.1 |
+| Layout, rail de filtros, jerarquía KPI | §13.2 |
+| Colores de series, rampas, comparaciones | §13.3 |
+| Elegir tipo de gráfica | §13.4 |
+| Deltas, semáforos, formatos, honestidad | §13.5 |
+| Tablas | §13.6 + §5.14 |
+| Cross-filter, URL, tooltips | §13.7 |
+| Checklist final | §13.8 |
+
+**Estado de la implementación**: las implementaciones de referencia (kit de
+componentes y formas) viven hoy en el primer proyecto dashboard de Marketing;
+cuando maduren con uso real se extraerán a un template compartido
+(`dashboard-tool-template`) y esta sección lo referenciará. El CLAUDE.md de
+todo proyecto dashboard nuevo debe incluir la fila "dashboard → §13" en su
+tabla de consumo del design system.
