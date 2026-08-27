@@ -31,6 +31,9 @@ Adapta las pantallas existentes de esta tool al design system isEazy.
 
 1. Lee el CLAUDE.md del proyecto y sigue sus reglas.
 2. Antes de tocar nada, audita el código visual existente (HTML/JSX/CSS):
+   - Si la tool es un dashboard de datos (test §13.1 del DESIGN.md): audita
+     contra el modo dashboard (§13), NO fuerces patrones web (stat-block,
+     tool-shell, prohibición de sidebar)
    - Colores hardcodeados que no estén en §2 del DESIGN.md
    - Componentes hechos a mano que duplican lo que ya hay en §5.6 a §5.24
      (buttons, forms, modales, badges, alerts, etc.)
@@ -118,6 +121,8 @@ Cuando Claude termine todo el plan:
 - 14 patrones de bloque listos (cards, banners, stats, tables, etc.)
 - Componentes base: buttons, forms, badges, modales, dropdowns, etc. (~30 piezas)
 - Tool shell obligatorio (header con logo isEazy + toggle dark/light)
+- Modo dashboard (§13) para tools de datos: rail de filtros, paleta de
+  gráficas validada de accesibilidad, catálogo de formas, tablas e interacción
 - Logos servidos desde este repo vía URL raw — cero copia local
 
 ### En sesiones futuras
@@ -150,9 +155,14 @@ para todas las decisiones visuales vive en:
 
 ### Antes de cualquier output visual
 
-Antes de elegir colores, tipografía, layout, componentes o cualquier cosa
-que afecte cómo se ve la tool, haz `WebFetch` al DESIGN.md con un `prompt`
-que extraiga SOLO la sección que necesitas. No descargues las 2500 líneas
+**PRIMERO**: ¿esta tool es un **dashboard/tool de datos** (KPIs, gráficas,
+filtros — test en §13.1)? → lee **§13 (Modo dashboard)**: en ese modo §13
+manda sobre §4/§5 donde entren en conflicto (sidebar, paleta de gráficas,
+patrones de KPIs, tool-shell).
+
+Después, antes de elegir colores, tipografía, layout, componentes o cualquier
+cosa que afecte cómo se ve la tool, haz `WebFetch` al DESIGN.md con un `prompt`
+que extraiga SOLO la sección que necesitas. No descargues las 3000 líneas
 enteras cada vez. Mapeo:
 
 | Necesitas | WebFetch con prompt |
@@ -163,6 +173,7 @@ enteras cada vez. Mapeo:
 | Layout (spacing, radius, shadows, motion, focus) | "Extrae §4 (Layout y sistema visual)" |
 | Icono → consultar Tabler | "Extrae §5.2 (Iconografía)" |
 | Charts | "Extrae §5.3 (Gráficos)" |
+| **Dashboard de datos** (layout, rail de filtros, paleta de gráficas, formas, tablas, interacción) | "Extrae §13 (Modo dashboard)" |
 | Patrón de pantalla (hero, cards, stats, etc.) | "Extrae §5.4 (Patrones de bloque)" |
 | Anti-patrones | "Extrae §5.5" |
 | Botones | "Extrae §5.6" |
@@ -180,6 +191,10 @@ enteras cada vez. Mapeo:
 
 ### Reglas duras (no negociables)
 
+0. **Si la tool es un dashboard de datos** (test §13.1), el modo dashboard
+   (§13) manda sobre §4/§5 donde entren en conflicto — incluidos el matiz del
+   sidebar de §5.5 (rail de filtros permitido), la paleta de §5.3 (sustituida
+   por §13.3) y los patrones de KPIs de §5.4.
 1. **No inventar tokens de color** fuera de §2. Solo las variables CSS
    definidas allí.
 2. **No renombrar patrones** por su caso de uso (nada de `post-card`,
@@ -217,6 +232,8 @@ Patrón dual obligatorio para soportar light + dark mode automáticamente:
 - **React + Tailwind + shadcn/ui + Tabler Icons** para tools React.
 - **Streamlit** con el `.streamlit/config.toml` del §2.7 para tools data.
 - **HTML estático con Tailwind CDN** para landings o playgrounds.
+- **Dashboards de datos**: cualquiera de los stacks anteriores + las reglas
+  del modo dashboard (§13).
 
 En todos los casos, copia las variables CSS de §2.2 al `:root` de tu
 `globals.css`, configura Tailwind con `darkMode: 'class'`, y usa las

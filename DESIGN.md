@@ -3101,6 +3101,7 @@ un control de fechas, es un dashboard.
 | §5.4.8 — `stat-block` para cifras | **Jerarquía de KPIs en 3 rangos**: 1 cifra héroe por vista, tiles secundarios (valor + delta + sparkline), y el resto a tabla. Nunca más de ~8 KPIs con el mismo peso visual — 20 tarjetas iguales es un informe, no un dashboard. |
 | Multipágina / navegación por secciones | **Una app de una página con vistas (pestañas)**; los filtros scope-an TODAS las vistas a la vez para que los números siempre cuadren entre sí. |
 | Texto explicativo en superficie | Una línea de descripción por gráfica está bien (qué representa, cómo leerla); los párrafos metodológicos van a tooltips/ⓘ. |
+| §5.25 — tool-shell con toggle dark/light | **Shell de dashboard propio**: header compacto con logo, pestañas de vistas y badge de frescura del dato. El toggle dark/light es opcional mientras no exista una paleta de gráficas dark validada (la clara no pasa la validación sobre superficie oscura — necesita sus propios pasos). |
 
 ### 13.3 Paleta de gráficas de dashboard (sustituye a §5.3 en este modo)
 
