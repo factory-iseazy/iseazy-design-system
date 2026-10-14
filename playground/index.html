@@ -480,6 +480,72 @@
       .table tbody tr[aria-selected="true"] { background: hsl(var(--brand-magenta-soft)); }
       .table tbody tr:last-child td { border-bottom: none; }
 
+      /* ============================================================
+         §12.6 — Piezas nuevas (issues #1-#5): color de categoría,
+         icon-tile, badge-category, tablas compact/editable, save-bar,
+         choice-pills, field-input-sm
+         ============================================================ */
+      .c-author  { --c: var(--accent-author); }
+      .c-factory { --c: var(--accent-factory); }
+      .c-skills  { --c: var(--accent-skills); }
+      .c-lms     { --c: var(--accent-lms); }
+      .c-engage  { --c: var(--accent-engage); }
+      .c-game    { --c: var(--accent-game); }
+      .c-sky     { --c: var(--deco-sky); }
+      .c-blue    { --c: var(--deco-blue); }
+      .c-violet  { --c: var(--deco-violet); }
+      .c-lime    { --c: var(--deco-lime); }
+      .c-mint    { --c: var(--deco-mint); }
+      .c-gold    { --c: var(--deco-gold); }
+      .c-amber   { --c: var(--deco-amber); }
+      .c-orange  { --c: var(--deco-orange); }
+      .c-rose    { --c: var(--deco-rose); }
+      .c-slate   { --c: var(--deco-slate); }
+
+      .badge-category { background: hsl(var(--c) / 0.14); color: hsl(var(--text-heading)); }
+      .badge-category::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: 9999px; background: hsl(var(--c)); flex-shrink: 0; }
+      a.badge-category:hover { background: hsl(var(--c) / 0.24); }
+
+      .icon-tile { width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 1.25rem; color: hsl(var(--c, var(--primary))); background: hsl(var(--c, var(--primary)) / 0.12); }
+      .icon-tile-sm { width: 2rem; height: 2rem; font-size: 1rem; border-radius: 0.375rem; }
+
+      .table-compact th { padding: 0.625rem 0.75rem; }
+      .table-compact td { padding: 0.5rem 0.75rem; font-size: 0.8125rem; }
+      .table-sticky thead { position: sticky; top: 0; z-index: 10; }
+      .table th.today { color: hsl(var(--primary)); box-shadow: inset 0 -2px 0 hsl(var(--primary)); }
+      .table tr.row-category td:first-child { box-shadow: inset 3px 0 0 hsl(var(--c)); }
+
+      .table-editable td { padding: 0.25rem 0.375rem; }
+      .table-editable .cell-input { width: 4rem; height: 2rem; padding: 0 0.5rem; text-align: right; font-family: inherit; font-size: 0.875rem; font-variant-numeric: tabular-nums; color: hsl(var(--text-body)); background: transparent; border: 1px solid transparent; border-radius: 0.375rem; outline: none; transition: border-color 150ms, box-shadow 150ms, background-color 150ms; }
+      .table-editable .cell-input:hover:not(:disabled) { border-color: hsl(var(--gray-400)); }
+      .table-editable .cell-input:focus { border-color: hsl(var(--primary)); box-shadow: 0 0 0 2px hsl(var(--primary) / 0.15); }
+      .table-editable .cell-input.cell-modified { background: hsl(var(--brand-magenta-soft)); }
+      .table-editable .cell-input[aria-invalid="true"] { border-color: hsl(var(--destructive)); background: hsl(var(--destructive) / 0.05); color: hsl(var(--destructive)); }
+      .table-editable .cell-input:disabled { color: hsl(var(--text-disabled)); cursor: not-allowed; }
+      .table-editable .col-off { background: hsl(var(--gray-100)); }
+      .table-editable .col-total, .table-editable tfoot td { background: hsl(var(--muted)); color: hsl(var(--text-heading)); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+      .table-editable tr.row-removed td:not(:last-child) { opacity: 0.55; }
+      .table-editable tr.row-removed .row-label { text-decoration: line-through; }
+
+      .save-bar { position: sticky; bottom: 1rem; z-index: 10; margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0.625rem 1rem; border-radius: 0.5rem; border: 1px solid hsl(var(--border)); background: hsl(var(--card)); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+      .save-bar-dirty { border-color: hsl(var(--warning) / 0.5); }
+      .save-bar-status { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0; font-size: 0.875rem; color: hsl(var(--text-subtle)); }
+      .save-bar-actions { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+      .choice-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; border: none; padding: 0; margin: 0; }
+      .choice-pill { position: relative; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; border-radius: 9999px; padding: 0.375rem 0.875rem; font-size: 0.875rem; font-weight: 500; background: hsl(var(--background)); color: hsl(var(--text-subtle)); border: 1px solid hsl(var(--border)); transition: background-color 150ms, border-color 150ms, color 150ms; }
+      .choice-pill input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip: rect(0 0 0 0); pointer-events: none; }
+      .choice-pill:hover { color: hsl(var(--text-body)); border-color: hsl(var(--primary) / 0.4); }
+      .choice-pill:has(input:checked) { background: hsl(var(--primary)); border-color: hsl(var(--primary)); color: white; }
+      .choice-pill:has(input:focus-visible) { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+      .choice-pill-category::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: hsl(var(--c)); flex-shrink: 0; }
+      .choice-pill-category:hover { background: hsl(var(--c) / 0.14); border-color: hsl(var(--c) / 0.6); }
+      .choice-pill-category:has(input:checked) { background: hsl(var(--c) / 0.18); border-color: hsl(var(--c)); color: hsl(var(--text-heading)); }
+
+      .field-input-sm { height: 2.25rem; padding: 0 0.75rem; font-size: 0.875rem; }
+      textarea.field-input-sm { height: auto; min-height: 3.75rem; padding: 0.5rem 0.75rem; }
+      select.field-input-sm { padding-right: 2.25rem; background-position: right 0.625rem center; }
+
       body {
         font-family: 'Work Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
         color: hsl(var(--foreground));
@@ -761,6 +827,15 @@
             <a href="#breadcrumbs" class="sidebar-link">Breadcrumbs</a>
             <a href="#slider" class="sidebar-link">Slider</a>
             <a href="#upload" class="sidebar-link">File upload</a>
+          </div>
+
+          <div>
+            <a href="#g-operativo" class="sidebar-group-title sidebar-group-link">Modo operativo · §14</a>
+            <a href="#op-density" class="sidebar-link">Densidad: campo, botón, tabla</a>
+            <a href="#op-table" class="sidebar-link">Table editable + save-bar</a>
+            <a href="#op-savebar" class="sidebar-link">Save-bar · estados</a>
+            <a href="#op-color" class="sidebar-link">Color de categoría</a>
+            <a href="#op-dialog" class="sidebar-link">Diálogo de salida</a>
           </div>
 
         </nav>
@@ -2644,12 +2719,248 @@
           </div>
         </div>
       </section>
+
+      <!-- GROUP: Modo operativo (§14) -->
+      <div class="group-header" id="g-operativo">
+        <p class="group-eyebrow">DESIGN.md · §14</p>
+        <h2 class="group-title">Modo operativo</h2>
+        <p class="group-subtitle">Tools de edición y registro diario: rejillas, formularios, guardar. En este modo §14 manda sobre §4/§5 (test en §14.1).</p>
+      </div>
+
+      <section id="op-density" class="py-16 border-t border-border">
+        <p class="text-sm uppercase tracking-wide text-muted-foreground mb-3">DESIGN.md · §14.2</p>
+        <h2 class="text-3xl font-semibold tracking-tight mb-2">Densidad: campo, botón, tabla</h2>
+        <p class="text-muted-foreground mb-10 max-w-2xl">Arriba, los defaults del modo web (campo 44 px, <code class="text-sm font-mono">btn-md</code>). Abajo, los del modo operativo: <code class="text-sm font-mono">field-input-sm</code> y <code class="text-sm font-mono">btn-sm</code> comparten 36 px y alinean en una fila; icon-only en <code class="text-sm font-mono">size-9</code>.</p>
+
+        <p class="text-xs font-mono text-muted-foreground mb-3">Modo web (§5.7.2 + §5.6.2)</p>
+        <div class="flex flex-wrap items-end gap-3 mb-8">
+          <div class="field w-56"><label class="field-label" for="op-w1">Proyecto</label><input class="field-input" id="op-w1" value="Acme — Diseño" /></div>
+          <div class="field w-40"><label class="field-label" for="op-w2">Semana</label><select class="field-input" id="op-w2"><option>13-19 oct</option></select></div>
+          <button class="btn btn-md btn-primary">Guardar</button>
+          <button class="btn btn-md btn-ghost size-11 p-0" aria-label="Más"><i class="ti ti-dots-vertical text-base"></i></button>
+        </div>
+
+        <p class="text-xs font-mono text-muted-foreground mb-3">Modo operativo (§14.2): field-input-sm + btn-sm + size-9</p>
+        <div class="flex flex-wrap items-end gap-3 mb-10">
+          <div class="field w-56"><label class="field-label" for="op-o1">Proyecto</label><input class="field-input field-input-sm" id="op-o1" value="Acme — Diseño" /></div>
+          <div class="field w-40"><label class="field-label" for="op-o2">Semana</label><select class="field-input field-input-sm" id="op-o2"><option>13-19 oct</option></select></div>
+          <div class="field w-28"><label class="field-label" for="op-o3">Horas</label><input class="field-input field-input-sm text-right tabular-nums" id="op-o3" value="7,5" /></div>
+          <button class="btn btn-sm btn-primary">Guardar</button>
+          <button class="btn btn-sm btn-ghost">Descartar</button>
+          <button class="btn btn-sm btn-ghost size-9 p-0" aria-label="Más"><i class="ti ti-dots-vertical text-base"></i></button>
+        </div>
+
+        <p class="text-xs font-mono text-muted-foreground mb-3">table-compact (por defecto en modo operativo)</p>
+        <div class="overflow-x-auto rounded-lg border max-w-3xl">
+          <table class="table table-compact">
+            <thead><tr><th>Ausencia</th><th>Tipo</th><th>Desde</th><th>Hasta</th><th class="text-right">Días</th><th class="sr-only">Acciones</th></tr></thead>
+            <tbody>
+              <tr class="row-category c-sky"><td class="font-medium">Puente de octubre</td><td><span class="badge badge-category c-sky">Vacaciones</span></td><td>10 oct</td><td>13 oct</td><td class="tabular-nums text-right">2</td><td><button class="btn btn-sm btn-ghost size-9 p-0" aria-label="Editar"><i class="ti ti-pencil text-base"></i></button></td></tr>
+              <tr class="row-category c-rose"><td class="font-medium">Gripe</td><td><span class="badge badge-category c-rose">Baja</span></td><td>2 oct</td><td>3 oct</td><td class="tabular-nums text-right">2</td><td><button class="btn btn-sm btn-ghost size-9 p-0" aria-label="Editar"><i class="ti ti-pencil text-base"></i></button></td></tr>
+              <tr class="row-category c-amber"><td class="font-medium">Examen de certificación</td><td><span class="badge badge-category c-amber">Examen</span></td><td>24 sep</td><td>24 sep</td><td class="tabular-nums text-right">1</td><td><button class="btn btn-sm btn-ghost size-9 p-0" aria-label="Editar"><i class="ti ti-pencil text-base"></i></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-muted-foreground italic mt-3">↑ <code class="font-mono">row-category</code> + <code class="font-mono">badge-category</code> con la misma clase <code class="font-mono">.c-*</code>: el color de la categoría se repite en todos los sitios donde aparece (§14.4).</p>
+      </section>
+
+      <section id="op-table" class="py-16 border-t border-border">
+        <p class="text-sm uppercase tracking-wide text-muted-foreground mb-3">DESIGN.md · §5.14.4 + §5.10.3</p>
+        <h2 class="text-3xl font-semibold tracking-tight mb-2">Table editable + save-bar</h2>
+        <p class="text-muted-foreground mb-10 max-w-2xl">Un campo por celda, totales en vivo, cabecera de hoy marcada (solo la cabecera), columna no laborable en <code class="text-sm font-mono">gray-100</code>, celda modificada con fondo (no borde), celda no válida, fila quitada pendiente. La <code class="text-sm font-mono">save-bar</code> queda pegada al pie del contenedor con scroll: desplaza la tabla para verlo.</p>
+
+        <div class="rounded-lg border max-h-80 overflow-y-auto p-4 max-w-4xl">
+          <div class="overflow-x-auto rounded-lg border">
+            <table class="table table-compact table-editable table-sticky">
+              <thead>
+                <tr>
+                  <th>Proyecto — tarea</th>
+                  <th class="text-right">L 13</th>
+                  <th class="text-right today">M 14</th>
+                  <th class="text-right">X 15</th>
+                  <th class="text-right">J 16</th>
+                  <th class="text-right">V 17</th>
+                  <th class="text-right col-off">S 18</th>
+                  <th class="text-right col-off">D 19</th>
+                  <th class="text-right col-total">Total</th>
+                  <th class="sr-only">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="row-label font-medium whitespace-nowrap">Acme — Diseño</td>
+                  <td><input class="cell-input" value="4" aria-label="L 13" /></td>
+                  <td><input class="cell-input cell-modified" value="6" aria-label="M 14" /></td>
+                  <td><input class="cell-input" value="2" aria-label="X 15" /></td>
+                  <td><input class="cell-input" value="" placeholder="0" aria-label="J 16" /></td>
+                  <td><input class="cell-input" value="" placeholder="0" aria-label="V 17" /></td>
+                  <td class="col-off"><input class="cell-input" value="" placeholder="0" aria-label="S 18" /></td>
+                  <td class="col-off"><input class="cell-input" value="" placeholder="0" aria-label="D 19" /></td>
+                  <td class="col-total">12</td>
+                  <td><button class="btn btn-sm btn-ghost size-9 p-0" aria-label="Quitar fila"><i class="ti ti-trash text-base"></i></button></td>
+                </tr>
+                <tr>
+                  <td class="row-label font-medium whitespace-nowrap">Globex — Storyboard</td>
+                  <td><input class="cell-input" value="4" aria-label="L 13" /></td>
+                  <td><input class="cell-input cell-modified" value="25" aria-invalid="true" title="Máximo 24 h por día" aria-label="M 14" /></td>
+                  <td><input class="cell-input" value="6" aria-label="X 15" /></td>
+                  <td><input class="cell-input" value="" placeholder="0" aria-label="J 16" /></td>
+                  <td><input class="cell-input" value="" placeholder="0" aria-label="V 17" /></td>
+                  <td class="col-off"><input class="cell-input" value="" placeholder="0" aria-label="S 18" /></td>
+                  <td class="col-off"><input class="cell-input" value="" placeholder="0" aria-label="D 19" /></td>
+                  <td class="col-total">35</td>
+                  <td><button class="btn btn-sm btn-ghost size-9 p-0" aria-label="Quitar fila"><i class="ti ti-trash text-base"></i></button></td>
+                </tr>
+                <tr class="row-removed">
+                  <td class="row-label font-medium whitespace-nowrap">Initech — QA</td>
+                  <td><input class="cell-input" value="" disabled aria-label="L 13" /></td>
+                  <td><input class="cell-input" value="2" disabled aria-label="M 14" /></td>
+                  <td><input class="cell-input" value="" disabled aria-label="X 15" /></td>
+                  <td><input class="cell-input" value="" disabled aria-label="J 16" /></td>
+                  <td><input class="cell-input" value="" disabled aria-label="V 17" /></td>
+                  <td class="col-off"><input class="cell-input" value="" disabled aria-label="S 18" /></td>
+                  <td class="col-off"><input class="cell-input" value="" disabled aria-label="D 19" /></td>
+                  <td class="col-total">2</td>
+                  <td><button class="btn btn-link text-sm">Deshacer</button></td>
+                </tr>
+                <tr class="row-category c-sky">
+                  <td class="row-label whitespace-nowrap"><span class="badge badge-category c-sky">Vacaciones</span></td>
+                  <td><input class="cell-input" value="" disabled aria-label="L 13" /></td>
+                  <td><input class="cell-input" value="" disabled aria-label="M 14" /></td>
+                  <td><input class="cell-input" value="" disabled aria-label="X 15" /></td>
+                  <td><input class="cell-input" value="8" disabled aria-label="J 16" /></td>
+                  <td><input class="cell-input" value="8" disabled aria-label="V 17" /></td>
+                  <td class="col-off"><input class="cell-input" value="" disabled aria-label="S 18" /></td>
+                  <td class="col-off"><input class="cell-input" value="" disabled aria-label="D 19" /></td>
+                  <td class="col-total">16</td>
+                  <td><a href="#op-color" class="btn btn-link text-sm">Ver</a></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr><td class="text-left">Total día</td><td>8</td><td>31</td><td>8</td><td>8</td><td>8</td><td>0</td><td>0</td><td>63</td><td></td></tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="flex justify-start mt-3">
+            <button class="btn btn-sm btn-ghost"><i class="ti ti-plus text-base"></i> Añadir tarea</button>
+          </div>
+          <div class="h-40"></div>
+          <div class="save-bar save-bar-dirty" role="status">
+            <div class="save-bar-status"><span class="badge badge-warning">Cambios sin guardar</span><span>2 celdas · 1 fila quitada · <span class="text-destructive">1 celda no válida</span></span></div>
+            <div class="save-bar-actions">
+              <button class="btn btn-sm btn-ghost">Descartar</button>
+              <button class="btn btn-sm btn-primary" disabled>Guardar</button>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-muted-foreground italic mt-3">↑ Guardar bloqueado mientras haya una celda no válida. Intro baja de celda; guardar es el botón (§14.3).</p>
+      </section>
+
+      <section id="op-savebar" class="py-16 border-t border-border">
+        <p class="text-sm uppercase tracking-wide text-muted-foreground mb-3">DESIGN.md · §5.10.3</p>
+        <h2 class="text-3xl font-semibold tracking-tight mb-2">Save-bar · estados</h2>
+        <p class="text-muted-foreground mb-10 max-w-2xl">El feedback aparece en la propia barra, en el sitio del estado. Éxito 6 s; el error se queda hasta que se resuelve. "Con cambios" es <code class="text-sm font-mono">warning</code>, no <code class="text-sm font-mono">destructive</code>: un cambio pendiente no es un error.</p>
+
+        <div class="flex flex-col gap-4 max-w-3xl">
+          <div class="save-bar" style="position: static;" role="status">
+            <div class="save-bar-status">Sin cambios</div>
+            <div class="save-bar-actions"><button class="btn btn-sm btn-ghost" disabled>Descartar</button><button class="btn btn-sm btn-primary" disabled>Guardar</button></div>
+          </div>
+          <div class="save-bar save-bar-dirty" style="position: static;" role="status">
+            <div class="save-bar-status"><span class="badge badge-warning">Cambios sin guardar</span><span>3 celdas</span></div>
+            <div class="save-bar-actions"><button class="btn btn-sm btn-ghost">Descartar</button><button class="btn btn-sm btn-primary">Guardar</button></div>
+          </div>
+          <div class="save-bar" style="position: static;" role="status">
+            <div class="save-bar-status text-success"><i class="ti ti-circle-check text-base"></i><span>Semana guardada en Klient · 13:42</span></div>
+            <div class="save-bar-actions"><button class="btn btn-sm btn-ghost" disabled>Descartar</button><button class="btn btn-sm btn-primary" disabled>Guardar</button></div>
+          </div>
+          <div class="save-bar" style="position: static;" role="status">
+            <div class="save-bar-status text-destructive"><i class="ti ti-circle-x text-base"></i><span>No se ha podido guardar: la tarea "Globex — Storyboard" está cerrada. Quítala o elige otra.</span></div>
+            <div class="save-bar-actions"><button class="btn btn-sm btn-ghost">Descartar</button><button class="btn btn-sm btn-primary">Reintentar</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="op-color" class="py-16 border-t border-border">
+        <p class="text-sm uppercase tracking-wide text-muted-foreground mb-3">DESIGN.md · §14.4 + §5.8.4 + §5.4.14</p>
+        <h2 class="text-3xl font-semibold tracking-tight mb-2">Color de categoría</h2>
+        <p class="text-muted-foreground mb-10 max-w-2xl">Una clase <code class="text-sm font-mono">.c-*</code> fija <code class="text-sm font-mono">--c</code> y lo consumen <code class="text-sm font-mono">icon-tile</code>, <code class="text-sm font-mono">badge-category</code>, <code class="text-sm font-mono">row-category</code> y <code class="text-sm font-mono">choice-pill-category</code>. Misma categoría, mismo color en toda la app.</p>
+
+        <p class="text-xs font-mono text-muted-foreground mb-3">Sección de métricas operativas (§5.1) con icon-tile</p>
+        <div class="rounded-lg border bg-card p-6 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mb-10">
+          <div class="flex items-start gap-3"><div class="icon-tile c-sky"><i class="ti ti-clock"></i></div><div><p class="text-xs uppercase tracking-wide text-subtle">Esta semana</p><p class="text-2xl font-semibold tabular-nums text-heading">31,5 h</p></div></div>
+          <div class="flex items-start gap-3"><div class="icon-tile c-violet"><i class="ti ti-calendar-off"></i></div><div><p class="text-xs uppercase tracking-wide text-subtle">Ausencias</p><p class="text-2xl font-semibold tabular-nums text-heading">2 días</p></div></div>
+          <div class="flex items-start gap-3"><div class="icon-tile c-amber"><i class="ti ti-briefcase"></i></div><div><p class="text-xs uppercase tracking-wide text-subtle">Proyectos</p><p class="text-2xl font-semibold tabular-nums text-heading">4</p></div></div>
+          <div class="flex items-start gap-3"><div class="icon-tile c-mint"><i class="ti ti-check"></i></div><div><p class="text-xs uppercase tracking-wide text-subtle">Guardado</p><p class="text-2xl font-semibold tabular-nums text-heading">hoy</p></div></div>
+        </div>
+
+        <p class="text-xs font-mono text-muted-foreground mb-3">badge-category · icon-tile-sm</p>
+        <div class="flex flex-wrap items-center gap-3 mb-10">
+          <span class="badge badge-category c-sky">Vacaciones</span>
+          <span class="badge badge-category c-rose">Baja</span>
+          <span class="badge badge-category c-amber">Examen</span>
+          <span class="badge badge-category c-violet">Formación</span>
+          <span class="badge badge-category c-slate">Otro</span>
+          <span class="mx-2 text-border">|</span>
+          <span class="badge badge-category c-author">Author</span>
+          <span class="badge badge-category c-lms">LMS</span>
+          <span class="mx-2 text-border">|</span>
+          <div class="icon-tile icon-tile-sm c-sky"><i class="ti ti-beach"></i></div>
+          <div class="icon-tile icon-tile-sm c-rose"><i class="ti ti-first-aid-kit"></i></div>
+          <div class="icon-tile icon-tile-sm c-amber"><i class="ti ti-school"></i></div>
+        </div>
+
+        <p class="text-xs font-mono text-muted-foreground mb-3">choice-pills · con color de categoría (radios nativos: Tab + flechas funcionan)</p>
+        <fieldset class="choice-pills mb-6">
+          <label class="choice-pill choice-pill-category c-sky"><input type="radio" name="op-tipo" checked /> Vacaciones</label>
+          <label class="choice-pill choice-pill-category c-rose"><input type="radio" name="op-tipo" /> Baja</label>
+          <label class="choice-pill choice-pill-category c-amber"><input type="radio" name="op-tipo" /> Examen</label>
+          <label class="choice-pill choice-pill-category c-violet"><input type="radio" name="op-tipo" /> Formación</label>
+          <label class="choice-pill choice-pill-category c-slate"><input type="radio" name="op-tipo" /> Otro</label>
+        </fieldset>
+
+        <p class="text-xs font-mono text-muted-foreground mb-3">choice-pills · sin categoría (activa en magenta, como la pill de filter-toolbar)</p>
+        <fieldset class="choice-pills">
+          <label class="choice-pill"><input type="radio" name="op-prio" /> Baja</label>
+          <label class="choice-pill"><input type="radio" name="op-prio" checked /> Normal</label>
+          <label class="choice-pill"><input type="radio" name="op-prio" /> Alta</label>
+          <label class="choice-pill"><input type="radio" name="op-prio" /> Urgente</label>
+        </fieldset>
+      </section>
+
+      <section id="op-dialog" class="py-16 border-t border-border">
+        <p class="text-sm uppercase tracking-wide text-muted-foreground mb-3">DESIGN.md · §5.11</p>
+        <h2 class="text-3xl font-semibold tracking-tight mb-2">Diálogo de salida con cambios</h2>
+        <p class="text-muted-foreground mb-10 max-w-2xl">Tres acciones apiladas: la segura primero (primary), no hacer nada en medio, la destructiva la última en ghost. Los textos nombran la acción.</p>
+        <div class="grid md:grid-cols-2 gap-8 items-start max-w-4xl">
+          <div class="dialog dialog-sm">
+            <i class="ti ti-device-floppy text-[40px] text-warning mx-auto block mb-3"></i>
+            <h2 class="t-h4 text-center mb-2">Tienes cambios sin guardar</h2>
+            <p class="t-body-sm text-center mb-6">Si cambias de semana sin guardar, se perderán las 3 celdas editadas.</p>
+            <div class="flex flex-col gap-2">
+              <button class="btn btn-md btn-primary">Guardar y continuar</button>
+              <button class="btn btn-md btn-ghost">Quedarme aquí</button>
+              <button class="btn btn-md btn-ghost text-destructive">Descartar y continuar</button>
+            </div>
+          </div>
+          <div class="dialog dialog-sm">
+            <i class="ti ti-alert-triangle text-[40px] text-destructive mx-auto block mb-3"></i>
+            <h2 class="t-h4 text-center mb-2">¿Descartar los cambios?</h2>
+            <p class="t-body-sm text-center mb-6">Se perderán las 3 celdas editadas y la fila quitada volverá.</p>
+            <div class="flex gap-3">
+              <button class="btn btn-md btn-ghost flex-1">Seguir editando</button>
+              <button class="btn btn-md btn-destructive flex-1">Sí, descartar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- FOOTER -->
       <footer class="pt-16 border-t border-border text-sm text-muted-foreground">
         <p>
           Playground — iseazy design system. Fuente:
           <a href="../DESIGN.md" class="text-primary hover:underline">DESIGN.md</a>.
-          Tokens §2 · 14 patrones §5.4 · Assets <a href="../assets/" class="text-primary hover:underline">assets/</a>.
+          Tokens §2 · 14 patrones §5.4 · Componentes §5.6-§5.25 · Modo operativo §14 · Assets <a href="../assets/" class="text-primary hover:underline">assets/</a>.
         </p>
       </footer>
     </main>

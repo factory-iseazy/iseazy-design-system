@@ -12,13 +12,16 @@ Cuando cambie la web de iseazy y queramos arrastrar las tools al nuevo branding,
 
 > **¿Tu tool es un dashboard/tool de datos?** (KPIs, gráficas, filtros — test en §13.1)
 > → empieza por **§13 Modo dashboard**: en ese modo, §13 manda sobre §4/§5.
+>
+> **¿Tu tool es de edición y registro diario?** (rejillas, formularios, guardar — test en §14.1)
+> → empieza por **§14 Modo app operativa**: en ese modo, §14 manda sobre §4/§5.
 
 - **§1 Identidad de marca** — [§1.1 Alcance del repo](#11-alcance-del-repo) · [§1.2 Voz](#12-voz)
 - **§2 Tokens de color** — [§2.1 Brand](#21-brand-con-significado) · [§2.2 Variables CSS](#22-variables-css-modo-claro) · [§2.3 Category accents](#23-category-accents-productos) · [§2.4 Decorative palette](#24-decorative-palette-resto-de-colores) · [§2.5 Grey scale](#25-grey-scale) · [§2.6 Text colors](#26-text-colors-alias-semánticos) · [§2.7 Streamlit](#27-streamlit-tools-de-compañeros) · [§2.8 Modo oscuro](#28-modo-oscuro)
 - **§3 Tipografía** — [§3.1 Carga](#31-carga) · [§3.2 Escala nombrada](#32-escala-tipográfica-nombrada) · [§3.3 Combinaciones canónicas](#33-combinaciones-canónicas) · [§3.4 Cheatsheet](#34-aplicación-rápida-cheatsheet)
 - **§4 Layout & sistema visual** — [§4.1 Container & breakpoints](#41-container--breakpoints) · [§4.2 Spacing scale](#42-spacing-scale) · [§4.3 Border-radius scale](#43-border-radius-scale) · [§4.4 Shadows / elevation](#44-shadows--elevation) · [§4.5 Z-index scale](#45-z-index-scale) · [§4.6 Motion](#46-motion) · [§4.7 Focus state global](#47-focus-state-global)
 - **§5 Componentes base** — [§5.1 Convenciones](#51-convenciones-de-componente) · [§5.2 Iconografía](#52-iconografía) · [§5.3 Gráficos](#53-gráficos-recharts) · [§5.4 Patrones de bloque (14)](#54-patrones-de-bloque) · [§5.5 Anti-patrones](#55-anti-patrones-qué-no-copiar-de-las-landings-de-ai-slop) · [§5.6 Buttons](#56-buttons) · [§5.7 Forms](#57-forms-inputs-labels-validación) · [§5.8 Badges, tags & avatars](#58-badges-tags--avatars) · [§5.9 Tooltips](#59-tooltips) · [§5.10 Alerts & Toasts](#510-alerts--toasts) · [§5.11 Modales / Dialogs](#511-modales--dialogs) · [§5.12 Empty states](#512-empty-states) · [§5.13 Loading states](#513-loading-states) · [§5.14 Tables & Pagination](#514-tables--pagination) · [§5.15 Dropdown menus](#515-dropdown-menus) · [§5.16 Popovers](#516-popovers) · [§5.17 Drawer / Sheet](#517-drawer--sheet) · [§5.18 Tabs internas](#518-tabs-internas) · [§5.19 Steppers](#519-steppers--wizards) · [§5.20 Date picker](#520-date-picker) · [§5.21 Combobox](#521-combobox--autocomplete) · [§5.22 Breadcrumbs](#522-breadcrumbs) · [§5.23 Slider](#523-slider) · [§5.24 File upload](#524-file-upload) · [§5.25 Tool shell](#525-tool-shell)
-- **§6 Datos canónicos** · **§7 Accesibilidad** · **§8 Cómo consumir** · **§9 Verificación** · **§10 Playground** · **§11 Assets** · **§12 Utilidades CSS extra** · **§13 Modo dashboard (tools de datos)**
+- **§6 Datos canónicos** · **§7 Accesibilidad** · **§8 Cómo consumir** · **§9 Verificación** · **§10 Playground** · **§11 Assets** · **§12 Utilidades CSS extra** · **§13 Modo dashboard (tools de datos)** · **§14 Modo app operativa (tools de edición y registro)**
 
 ---
 
@@ -211,7 +214,7 @@ Estos colores aparecen en iseazy.com con frecuencia baja-media y **no tienen sig
 
 Reglas de uso:
 
-1. **No asignar significado fijo** a un color decorativo. Si tu pantalla usa `--deco-lime` para "OK" sistemáticamente, eso es `--brand-success`, no decorativo.
+1. **No usar un decorativo para codificar estado**. Si tu pantalla usa `--deco-lime` para "OK" sistemáticamente, eso es `--brand-success`, no decorativo. Sí se usa para **identidad de categoría** (tipo, línea, industria): un color de esta paleta por categoría, fijo en código y el mismo en toda la app (§2.3 regla 2). Implementación con la variable `--c` (§12.6) y la regla de §14.4.
 2. **Variedad sí, caos no**: en un `stat-block` con 4 cifras, usar 4 colores decorativos distintos en orden estable (el mismo render siempre da el mismo color a la misma cifra). No rotar entre renders.
 3. **Charts**: cuando una serie tiene N>6 valores, ampliar con esta paleta antes de inventar hex. Orden recomendado: magenta → purple → sky → lime → gold → violet → orange → rose → slate.
 4. **Gradientes decorativos**: combinar colores afines en familia (sky+sky-soft, violet+magenta-mid) — no mezclar familias opuestas (lime+rose) salvo intención explícita.
@@ -659,9 +662,8 @@ Niveles de elevación apilables. La web pública apenas usa sombras gruesas; nue
 |---|---|---|
 | `elev-0` | (ninguna) | Default. Bloques planos, fondos. |
 | `elev-1` | `shadow-sm` | Card interactiva no destacada (`category-card` en hover, fila de tabla hover). |
-| `elev-2` | `shadow` | Dropdowns, popovers, menus contextuales. |
-| `elev-3` | `shadow-md` | Modales, dialogs. |
-| `elev-4` | `shadow-lg` | Toasts flotantes, cards hero destacadas. |
+| `elev-2` | `shadow-md` | Dropdowns, popovers, tooltips, calendario, barras sticky (`save-bar`). |
+| `elev-3` | `shadow-lg` | Modales, dialogs, drawers, toasts flotantes, cards hero destacadas. |
 
 > **"Aura" de buttons/inputs (§5.6, §5.7) NO es elevation**. Es identidad de marca (sombra magenta/purple del propio elemento). Convive con `elev-0` por defecto — un botón primary no tiene `shadow-sm` además del aura.
 
@@ -674,7 +676,7 @@ Sin escala canónica, cada tool inventa números y aparecen bugs de stacking. Es
 | Nivel | Tailwind | Capa |
 |---|---|---|
 | 0 | `z-0` | Contenido base de la página. |
-| 10 | `z-10` | Sticky elements (header, sticky tabs, columna sticky en tabla). |
+| 10 | `z-10` | Sticky elements (header, sticky tabs, columna sticky en tabla, `save-bar`). |
 | 20 | `z-20` | Dropdowns, menus contextuales, popovers. |
 | 30 | `z-30` | Tooltips. |
 | 40 | `z-40` | Backdrop de modales (overlay). |
@@ -750,7 +752,7 @@ Excepciones que NO deben llevar foco visible:
 - `<div>` con `tabindex="-1"` programático (foco no usuario).
 - Elementos puramente decorativos con `aria-hidden="true"`.
 
-> **Densidad**: la app es B2B interna. Prioridad a densidad y escaneabilidad sobre aire — no copiar el espaciado generoso del hero de la web pública dentro de las pantallas operativas. (Regla heredada del §4 original, sigue aplicando.)
+> **Densidad**: la app es B2B interna. Prioridad a densidad y escaneabilidad sobre aire — no copiar el espaciado generoso del hero de la web pública dentro de las pantallas operativas. (Regla heredada del §4 original, sigue aplicando.) Los **valores concretos** de esa densidad (tabla, campo, botón, espaciado) están en **§14.2**, que manda en tools de edición y registro diario.
 
 ---
 
@@ -766,7 +768,7 @@ Cuando una tool consumidora construye un componente nuevo, aplican estas convenc
 
 - **Card como link**: bloque envoltorio `<a>`/`<Link>` con `rounded-lg border bg-card p-6 transition-colors hover:border-primary` + flecha `→` que se traslada en hover (`transition-transform group-hover:translate-x-1`). Es el patrón base que reutilizan `category-card`, `media-card` y `showcase-card` (§5.4).
 - **Header con navegación horizontal**: nav con items `rounded-md`, item activo `bg-primary text-primary-foreground`. Evitar sidebar permanente (§5.5 anti-patrón 1).
-- **Sección de métricas operativas (densa)**: `rounded-lg border bg-card p-6`, grid 2/4 columnas, eyebrow `text-sm uppercase tracking-wide text-subtle`. Distinta de `stat-block` (§5.4.8), que es marketing-style.
+- **Sección de métricas operativas (densa)**: `rounded-lg border bg-card p-6`, grid 2/4 columnas, eyebrow `text-sm uppercase tracking-wide text-subtle`, y cada métrica con un `icon-tile` (§5.8.4) de color decorativo fijo (§14.4). Distinta de `stat-block` (§5.4.8), que es marketing-style.
 - **Status pill**: usar `--accent` (azul info) para "running"/"in-progress", `--success` (verde lima) para "completed", `--destructive` para "failed", `--warning` para "aborted/stale", `--muted` para "pending/queued". Punto pulsante (`animate-pulse`) opcional para estados activos.
 - **Progreso indeterminado**: barra `animate-pulse bg-accent` (no `bg-blue-500` genérico).
 
@@ -896,7 +898,7 @@ Convención por patrón: `Qué es` (en abstracto), `Ejemplos de uso` (variados),
 
 **Clases del contenedor**: `rounded-lg border bg-card p-6 flex flex-col gap-3 transition-colors hover:border-primary`.
 
-**Icono**: `<i class="ti ti-X text-[40px] text-{accent} mb-2"></i>` (default) o `text-[32px]` (compact). Solo se tinta el stroke; el fondo del icono queda sin color.
+**Icono**: `<i class="ti ti-X text-[40px] text-{accent} mb-2"></i>` (default) o `text-[32px]` (compact). Solo se tinta el stroke; el fondo del icono queda sin color. (En secciones de métricas operativas y listados densos el icono va en `icon-tile`, §5.8.4: ahí el tamaño es 20 px y el tinte de fondo es lo que le da presencia.)
 
 **Título**: `text-lg font-semibold text-foreground`.
 
@@ -1195,6 +1197,17 @@ Convención por patrón: `Qué es` (en abstracto), `Ejemplos de uso` (variados),
 
 **Pill activa**: `rounded-full bg-primary text-primary-foreground px-4 py-1.5 text-sm font-medium`.
 
+**Variante `choice-pills`** (selección única en un formulario): la misma pill, pero envolviendo un `<input type="radio">` nativo dentro de un `<fieldset>`. Para elegir **una opción entre pocas (hasta 8)** viendo todas sin abrir nada: tipo de ausencia, prioridad, canal. Activa con `:has(input:checked)` (mismo estilo que la pill activa del filtro), foco con `:has(input:focus-visible)` (§4.7). Si las opciones son **categorías con color** (§14.4), añadir `choice-pill-category` + `.c-*`: la pill lleva el punto de su color y la activa se tinta con `--c` en vez de magenta. CSS en §12.6. No es un `tag` (§5.8.2, cerrable) ni un `tabs-segmented` (§5.18, cambia de vista).
+
+```html
+<fieldset class="choice-pills">
+  <legend class="field-label mb-2">Tipo</legend>
+  <label class="choice-pill choice-pill-category c-sky"><input type="radio" name="tipo" checked /> Vacaciones</label>
+  <label class="choice-pill choice-pill-category c-rose"><input type="radio" name="tipo" /> Baja</label>
+  <label class="choice-pill choice-pill-category c-amber"><input type="radio" name="tipo" /> Examen</label>
+</fieldset>
+```
+
 **Cuándo NO**: >8 opciones por eje (usar dropdown multi-select). Cuando los ejes se combinan con lógica compleja AND/OR ambigua (usar filtros explícitos con dropdowns + search).
 
 ---
@@ -1204,6 +1217,8 @@ Convención por patrón: `Qué es` (en abstracto), `Ejemplos de uso` (variados),
 Estos patrones aparecen en muchas tools recientes (Claude, Notion AI, etc.) y **deben evitarse** en el sistema iseazy interno y en las tools de compañeros:
 
 > **Matiz dashboard**: la prohibición del sidebar (punto 1) es para *navegación*. Un rail de **filtros** en un dashboard de datos está permitido y recomendado — ver **§13.2**. Y los anti-patrones propios de dashboards viven en **§13.8**.
+>
+> **Matiz operativo**: en tools de edición y registro diario (test §14.1) los tamaños densos de **§14.2** mandan sobre los de §5, y los anti-patrones propios viven en **§14.5**.
 
 1. **Sidebar permanente fija a la izquierda con avatares circulares y emojis**. Si la app necesita navegación lateral, usar `Layout.tsx` actual (header horizontal). Sidebar solo si pasamos de 8 secciones de primer nivel — entonces consultar.
 2. **Cards rectangulares idénticas todas magenta-bordered, sin variación**. Una pantalla debe mezclar patrones distintos del §5.4 (`category-card` con icono, `media-card` con foto, `quote-card`, `stat-block`, `accordion-list`…) y los iconos coger color de categoría (§2.3). Si todas las cards de una página son iguales, algo va mal.
@@ -1437,6 +1452,8 @@ disabled:bg-gray-100-iz disabled:text-disabled disabled:cursor-not-allowed
 aria-invalid:border-destructive aria-invalid:focus:ring-destructive/15
 ```
 
+**Tamaño compacto `.field-input-sm`** (modo operativo, §14.2): `h-9 px-3 text-sm` (36 px, la altura de `btn-sm`) para que campos y botones alineen en una misma fila de toolbar o de tabla. `textarea.field-input-sm`: `min-h-[60px] py-2`. Mismos estados que el base. CSS en §12.6. Fuera del modo operativo se mantiene `h-11`.
+
 #### 5.7.3 Variantes específicas
 
 ##### `<textarea>`
@@ -1524,7 +1541,7 @@ Toggle on/off. Para shadcn usar el `<Switch>` de Radix; en HTML estático:
 
 #### 5.7.5 Cuándo NO usar este sistema
 
-- **Tablas editables inline**: usar inputs sin `bg-muted` (`bg-transparent`), sin border en idle, con border solo en focus. La fila ya da contexto.
+- **Tablas editables inline**: usar inputs sin `bg-muted` (`bg-transparent`), sin border en idle, con border solo en focus. La fila ya da contexto. Tamaños, estados por celda (modificada, no válida) y totales en `table-editable` (§5.14.4).
 - **Comandos / búsqueda global**: para `<input type="search">` con palette tipo cmd-k, usar componente shadcn `Command` con estilos por defecto.
 - **OTP / códigos de verificación**: usar 6 inputs separados con styling propio (separación entre celdas, monospace). No reutilizar `.field-input`.
 
@@ -1561,6 +1578,13 @@ Variante con **punto pulsante** (estados activos en tiempo real):
   <span class="size-1.5 rounded-full bg-current animate-pulse"></span>
   Sincronizando
 </span>
+```
+
+Variante **`badge-category`** (categoría con color propio, §14.4): punto en el color de la categoría, fondo con su tinte al 14 %, texto `text-heading`. Requiere una clase `.c-*` (§12.6) que fije `--c`; el mismo color se repite en la marca lateral de la fila (`row-category`, §5.14) y en la `choice-pill` que la selecciona (§5.4.14).
+
+```html
+<span class="badge badge-category c-sky">Vacaciones</span>
+<span class="badge badge-category c-rose">Baja</span>
 ```
 
 #### 5.8.2 `tag` — etiqueta cerrable de selección
@@ -1614,6 +1638,28 @@ Las iniciales se calculan: 1ª letra del nombre + 1ª del apellido, mayúsculas.
 ```
 
 `-space-x-2` los solapa, `ring-2 ring-background` los separa visualmente con el color de fondo de la página.
+
+#### 5.8.4 `icon-tile` — icono sobre su tinte
+
+Icono Tabler de 20 px centrado en un cuadrado de 40 px (`rounded-lg`) con el color de su categoría y el mismo color al 12 % de fondo. Es lo que da presencia a una métrica o a un item de lista sin recurrir a un icono grande. Tamaño `icon-tile-sm` (32 px, icono 16 px) para filas densas.
+
+| Anatomía | Tailwind |
+|---|---|
+| contenedor | `size-10 rounded-lg inline-flex items-center justify-center shrink-0 text-xl` + `color: hsl(var(--c))` + `background: hsl(var(--c) / 0.12)` |
+| icono | `<i class="ti ti-X"></i>` (hereda tamaño y color) |
+
+```html
+<div class="icon-tile c-sky"><i class="ti ti-clock"></i></div>
+<div class="icon-tile c-violet"><i class="ti ti-calendar-off"></i></div>
+```
+
+Reglas:
+
+- En una sección de métricas (§5.1) cada métrica lleva su `icon-tile` con un color de §2.4 distinto y en orden estable (§2.4 regla 2). Sin `.c-*` cae a `--primary`: válido para un único tile, no para una fila de cuatro todos magenta.
+- Para iconos de categoría en `category-card` (§5.4.3) sigue aplicando "solo stroke, sin fondo": ahí el icono es grande (32-40 px) y el tinte sobra.
+- No mezclar en una misma fila tiles con color y tiles sin él.
+
+---
 
 ### 5.9 Tooltips
 
@@ -1719,6 +1765,39 @@ toast.success("Sincronización completada", {
 - Para notificaciones críticas que deben verse sí o sí — pueden pasar desapercibidas.
 - Para confirmaciones de acciones destructivas — usar modal antes, toast después.
 
+#### 5.10.3 Feedback inline y `save-bar`
+
+**Feedback inline**: el resultado de una acción se muestra **en el sitio de la acción** (junto al botón, en la barra de guardado, en la fila editada), no en una esquina. Es la forma por defecto en modo operativo (§14.3): una persona que está mirando la fila que acaba de editar no ve un toast ni una alerta arriba de la página (comprobado en la primera tool de registro de horas). Duración: éxito **6 s** (más que el toast de §5.10.2 porque no hay animación de entrada que llame la atención); error **hasta que se resuelve**.
+
+**`save-bar`**: barra pegada al pie del área de contenido para pantallas donde se editan varias cosas y se guardan de una vez.
+
+| Anatomía | Detalle |
+|---|---|
+| contenedor | `sticky bottom-4 z-10 mt-4 flex flex-wrap items-center gap-3 rounded-lg border bg-card px-4 py-2.5 shadow-md` (elev-2 §4.4, z-10 §4.5). El `pb-32` del `tool-shell` (§5.25) deja sitio debajo. |
+| estado, sin cambios | `text-sm text-subtle` "Sin cambios". |
+| estado, con cambios | `badge badge-warning` "Cambios sin guardar" + borde `border-warning/50`. Es `warning` (stale) y **no** `destructive`: un cambio pendiente no es un error (§5.8.1). |
+| estado, tras guardar | el resultado sustituye al estado en el mismo sitio: `text-success` con `ti-circle-check` 6 s, o `text-destructive` con `ti-circle-x` hasta que se resuelva. |
+| acciones | `ml-auto flex gap-3`: "Descartar" (`btn-sm btn-ghost`, pide confirmación `dialog-sm`) + "Guardar" (`btn-sm btn-primary`; `btn-md` si es la única acción principal de la pantalla). |
+
+```html
+<div class="save-bar save-bar-dirty" role="status">
+  <div class="save-bar-status"><span class="badge badge-warning">Cambios sin guardar</span> <span>3 celdas · 1 fila quitada</span></div>
+  <div class="save-bar-actions">
+    <button class="btn btn-sm btn-ghost">Descartar</button>
+    <button class="btn btn-sm btn-primary">Guardar</button>
+  </div>
+</div>
+```
+
+Comportamiento:
+
+- **Guardar solo con el botón**: Intro no envía (§14.3).
+- **Descartar** pide confirmación con el confirm dialog de §5.11 ("Sí, descartar").
+- **Salir con cambios** (cambiar de semana, de sección, cerrar): diálogo de tres opciones de §5.11.
+- Una sola `save-bar` por pantalla. Si hay varias zonas editables, una barra para todas.
+
+**Cuándo NO**: formularios de un solo envío (alta, login) — ahí el botón va al pie del formulario (§5.7.4) y el feedback es inline junto a él, sin barra sticky.
+
 ### 5.11 Modales / Dialogs
 
 Overlay modal sobre el contenido principal. Bloquea la interacción con el resto hasta que el usuario actúe.
@@ -1726,7 +1805,7 @@ Overlay modal sobre el contenido principal. Bloquea la interacción con el resto
 | Anatomía | Detalle |
 |---|---|
 | backdrop | `fixed inset-0 bg-black/50 z-40` |
-| content | `fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg rounded-xl bg-card p-6 shadow-md` |
+| content | `fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg rounded-xl bg-card p-6 shadow-lg` |
 | header | título `t-h3` + close `ti-x` |
 | body | contenido scrollable si excede |
 | footer | CTAs alineados a la derecha (`flex justify-end gap-3`): cancelar (`btn-ghost`) + confirmar (`btn-primary`) |
@@ -1769,6 +1848,27 @@ Modal específico para confirmar acciones destructivas (borrar, descartar):
 - Icono Tabler `ti-alert-triangle` arriba, `text-destructive`.
 - Texto centrado.
 - Dos CTAs de igual peso (`flex-1`), destructive a la derecha (acción destructiva NO es el default).
+
+#### Diálogo de salida con cambios (tres opciones)
+
+Cuando la persona intenta salir de una pantalla con cambios sin guardar (`save-bar` §5.10.3): cambiar de periodo, ir a otra sección, cerrar.
+
+```html
+<div class="dialog dialog-sm">
+  <i class="ti ti-device-floppy text-[40px] text-warning mx-auto block mb-3"></i>
+  <h2 class="t-h4 text-center mb-2">Tienes cambios sin guardar</h2>
+  <p class="t-body-sm text-center mb-6">Si continúas sin guardar, se perderán las 3 celdas editadas.</p>
+  <div class="flex flex-col gap-2">
+    <button class="btn btn-md btn-primary">Guardar y continuar</button>
+    <button class="btn btn-md btn-ghost">Quedarme aquí</button>
+    <button class="btn btn-md btn-ghost text-destructive">Descartar y continuar</button>
+  </div>
+</div>
+```
+
+- Tres acciones **apiladas en columna**, no en fila: tres botones de igual ancho en fila no caben en `dialog-sm` y el ojo no distingue el primario.
+- Orden: la acción segura y más probable primero (`btn-primary`), la de no hacer nada en medio, la destructiva **la última y en ghost** con texto `text-destructive`; nunca `btn-destructive` sólido, que la haría competir con el primario.
+- Los textos nombran la acción (§14.3): nunca "Sí / No / Cancelar".
 
 **Implementación recomendada**: Radix Dialog (shadcn). Para HTML estático, las clases CSS están en §12.
 
@@ -2041,8 +2141,11 @@ Para datos tabulares densos. Para listas con cards visuales, usar `category-card
 Modificadores:
 
 - `.table-sticky` → `thead` con `position: sticky; top: 0; z-index: 10;`. Útil en tablas largas con header siempre visible.
-- `.table-compact` → padding `0.5rem 0.75rem`, font-size `0.8125rem`. Para tablas con >20 filas visibles.
+- `.table-compact` → `th` padding `0.625rem 0.75rem`, `td` padding `0.5rem 0.75rem`, font-size `0.8125rem`. Para tablas con >20 filas visibles y **por defecto en modo operativo** (§14.2).
 - `.table-selectable` → primera columna `<th>`/`<td>` con checkbox para selección múltiple.
+- `.table-editable` → un campo por celda, estados y totales (§5.14.4).
+- `th.today` → cabecera de la columna de hoy: `text-primary` + raya inferior de 2 px (la de `tab-pills`). Solo la cabecera; las celdas no se colorean (§5.14.4).
+- `tr.row-category` + `.c-*` → marca lateral de 3 px en el color de la categoría de la fila (§14.4).
 
 Reglas:
 
@@ -2090,6 +2193,65 @@ Patrón canónico:
 
 - Listas con <50 items totales — mostrar todo o usar scroll virtual.
 - Datos con scroll infinito esperado (timeline, feed) — usar "Cargar más" o infinite scroll.
+
+---
+
+#### 5.14.4 `table-editable` — rejilla con un campo por celda
+
+Tabla donde cada celda es un campo (horas por día, cantidades, tarifas), con totales por fila y por columna y guardado en bloque con `save-bar` (§5.10.3). Nace de la primera tool de registro de horas; incluye lo que **no** funcionó.
+
+| Estado | Visual | Nota |
+|---|---|---|
+| idle | `cell-input`: `h-8 w-16 px-2 text-right text-sm tabular-nums bg-transparent border border-transparent rounded-md` | §5.7.5: sin fondo ni borde; la fila da el contexto. |
+| hover | borde `gray-400` | Indica que se puede editar. |
+| foco | borde `primary` + ring `primary/15` | Igual que `.field-input` (§5.7.2). |
+| **modificada** | `cell-modified`: fondo `brand-magenta-soft` | Con **fondo, no con borde**: el borde magenta es el foco, y el ojo no distingue "modificada" de "enfocada". |
+| **no válida** | `aria-invalid="true"`: borde y texto `destructive`, fondo `destructive/5` | Gana siempre a modificada. |
+| columna no laborable | `col-off`: fondo `gray-100` | **No `gray-50`**: es el color del hover de fila y del `thead`, y la columna parecería una fila en hover. |
+| columna de hoy | `th.today` | Solo la cabecera. Probado y descartado: pintar toda la columna de `magenta-soft` contrasta mal con los campos; un marco alrededor de la columna, también. |
+| totales (`col-total`, `tfoot td`) | fondo `muted`, `text-heading`, 600, `tabular-nums`, derecha | Coherente con §13.6. |
+| fila quitada pendiente | `row-removed`: celdas al 55 %, etiqueta tachada, botón "Deshacer" `btn-link` en la última columna | Se materializa al guardar. |
+
+Anatomía:
+
+```html
+<div class="overflow-x-auto rounded-lg border">
+  <table class="table table-compact table-editable">
+    <thead>
+      <tr>
+        <th>Proyecto — tarea</th>
+        <th class="text-right">L 13</th>
+        <th class="text-right today">M 14</th>
+        <th class="text-right">X 15</th>
+        <th class="text-right col-off">S 18</th>
+        <th class="text-right col-total">Total</th>
+        <th class="sr-only">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">Acme — Diseño</td>
+        <td><input class="cell-input" value="4" /></td>
+        <td><input class="cell-input cell-modified" value="6" /></td>
+        <td><input class="cell-input" value="" placeholder="0" /></td>
+        <td class="col-off"><input class="cell-input" value="" placeholder="0" /></td>
+        <td class="col-total">10</td>
+        <td><button class="btn btn-sm btn-ghost size-9 p-0" aria-label="Quitar fila"><i class="ti ti-trash"></i></button></td>
+      </tr>
+    </tbody>
+    <tfoot><tr><td>Total día</td><td>4</td><td>6</td><td>0</td><td>0</td><td>10</td><td></td></tr></tfoot>
+  </table>
+</div>
+```
+
+Comportamiento:
+
+- **Intro baja a la celda de abajo**; Tab va a la derecha. Guardar es siempre el botón de la `save-bar` (§14.3).
+- **Totales en vivo**: se recalculan al escribir, sin esperar a guardar.
+- **Añadir fila** con un botón `btn-sm btn-ghost` bajo la tabla ("+ Añadir tarea"), nunca con una fila vacía permanente.
+- **Validación por celda** al salir de la celda (`blur`), no al teclear; el mensaje va en el `title` del campo y en la `save-bar` (cuenta de celdas no válidas), que bloquea Guardar.
+
+**Cuándo NO**: para editar una sola fila (usar un formulario o un drawer §5.17). Para más de ~12 columnas editables (dividir en vistas o periodos).
 
 ---
 
@@ -2336,7 +2498,7 @@ Estados de la celda de día:
 | Estado | Estilo |
 |---|---|
 | `default` | `hover:bg-muted text-body` |
-| `today` | `text-primary font-semibold` (no fondo, solo texto) |
+| `today` | `text-primary font-semibold` (no fondo, solo texto). La misma regla vale para la cabecera de la columna de hoy en una tabla (`th.today`, §5.14). |
 | `selected` | `bg-primary text-white font-medium` |
 | `range-middle` | `bg-magenta-soft text-primary` (solo en range mode) |
 | `disabled` | `text-disabled cursor-not-allowed` |
@@ -2684,13 +2846,14 @@ Taglines oficiales (cuando se necesite expandir en tooltip o landing):
 **Como humano** (Hugo, compañeros):
 
 - **¿Vas a construir un dashboard de datos?** → lee **§13** primero; en ese modo §13 manda sobre §4/§5.
+- **¿Vas a construir una tool de edición y registro diario** (rejillas, formularios, guardar)? → lee **§14** primero; en ese modo §14 manda sobre §4/§5.
 - Cuando arranques una pantalla nueva: lee §1.2 (voz), §3.2 (escala), §5.1 (componentes base) y **§5.4 (patrones de bloque)**. Lee el **meta-principio del §5.4** antes de elegir patrón: los nombres son genéricos a propósito y un patrón sirve para muchos casos de uso. Identifica el shape del contenido, encuentra el patrón cuyo shape coincide, copia su anatomía. Si nada encaja, parar antes de inventar.
 - Cuando dudes si un color tiene significado o es adorno: §2.1 (brand, con significado) vs §2.4 (decorative, sin significado fijo). Si no está en §2, no se usa.
 - Cuando una card "se vea sosa": probablemente le falta el color de categoría del producto (§2.3) o un accent decorativo (§2.4), o estás cayendo en un anti-patrón (§5.5).
 
 **Como Claude Code** (dentro de este repo o de una tool):
 
-- **Antes de nada**: si la tool es un dashboard/tool de datos (test en §13.1), lee **§13** — layout, paleta de gráficas y convenciones propias que mandan sobre §4/§5 en ese modo.
+- **Antes de nada**: si la tool es un dashboard/tool de datos (test en §13.1), lee **§13** — layout, paleta de gráficas y convenciones propias que mandan sobre §4/§5 en ese modo. Si es una tool de edición y registro diario (test en §14.1), lee **§14** — densidad, interacción y color de categoría que mandan sobre §4/§5 en ese modo.
 - Antes de proponer nombres de productos, países, stages o labels: consulta §6. No inventes.
 - Antes de elegir un color: usa una variable CSS (`hsl(var(--primary))`, `bg-accent`, `hsl(var(--accent-{producto}))`, `hsl(var(--deco-{nombre}))`, etc.) o un hex de §2.1/§2.3/§2.4/§5.3. Si necesitas un color que no está en este documento, párate y avisa a Hugo.
 - Antes de componer una pantalla: revisa §5.4 y nombra qué patrón vas a usar para cada bloque. Si propones algo que no está en §5.4, justifícalo y comprueba que no caes en §5.5.
@@ -2720,7 +2883,7 @@ Si la salida cambia significativamente (deja de aparecer `#EB1C79` o `Work Sans`
 
 ## 10. Playground
 
-[`playground/index.html`](playground/index.html) renderiza los tokens (§2.1 a §2.5) y los 14 patrones de bloque (§5.4) en un único HTML estático. Sin build, sin dependencias locales — abre con doble click. Carga por CDN: Tailwind, Work Sans (Google Fonts) y Tabler Icons (webfont). Los assets locales (logos, screenshots) viven en `assets/` y se referencian con paths relativos.
+[`playground/index.html`](playground/index.html) renderiza los tokens (§2.1 a §2.5), los 14 patrones de bloque (§5.4), los componentes base (§5.6 a §5.25) y las piezas del modo operativo (§14: campo compacto, tabla editable, barra de guardado, badges e iconos de categoría, choice-pills) en un único HTML estático. Sin build, sin dependencias locales — abre con doble click. Carga por CDN: Tailwind, Work Sans (Google Fonts) y Tabler Icons (webfont). Los assets locales (logos, screenshots) viven en `assets/` y se referencian con paths relativos.
 
 Propósito:
 
@@ -2729,7 +2892,7 @@ Propósito:
 - Compartir el sistema con compañeros que aún no tienen el dashboard arrancado.
 - Verificar visualmente que la paleta de §2 sigue alineada con iseazy.com cuando se sospeche deriva — abrir iseazy.com en una pestaña y el playground en otra, comparar swatches. La verificación reproducible (curl + grep) está en §9.
 
-Regla: cuando se añade o modifica un patrón en §5.4, el playground debe actualizarse en el mismo commit. Si el playground no refleja un patrón, ese patrón **no se considera canónico** aunque esté escrito en el doc — la implementación de referencia vive en el HTML.
+Regla: cuando se añade o modifica un patrón en §5.4 o un componente en §5.6-§5.25/§14, el playground debe actualizarse en el mismo commit. Si el playground no refleja un patrón, ese patrón **no se considera canónico** aunque esté escrito en el doc — la implementación de referencia vive en el HTML.
 
 Lo que NO es el playground:
 
@@ -2798,7 +2961,7 @@ Si dudas: un icono se puede sustituir por otro icono parecido sin cambiar el sig
 
 ## 12. Utilidades CSS extra (copy-paste)
 
-Pegar este bloque en `globals.css` o en un `<style>` propio. Son utilidades **adicionales a Tailwind/shadcn** que el sistema necesita: tipografía nombrada (§3.2), buttons (§5.6), forms (§5.7), patrones especiales (clip-path blob, dotted background, marquee).
+Pegar este bloque en `globals.css` o en un `<style>` propio. Son utilidades **adicionales a Tailwind/shadcn** que el sistema necesita: tipografía nombrada (§3.2), buttons (§5.6), forms (§5.7), patrones especiales (clip-path blob, dotted background, marquee) y, en §12.6, los componentes de §5.8 a §5.18 y las piezas del modo operativo (§14) para tools sin Tailwind.
 
 Todas usan las CSS variables definidas en §2.2, §2.3, §2.4, §2.5 y §2.6. Si esas variables no están en el `:root`, esto no pinta.
 
@@ -3058,6 +3221,171 @@ details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 ```
 
+### 12.6 Componentes (§5.8 a §5.18) y piezas del modo operativo (§14)
+
+CSS de los componentes que §5 describe en Tailwind y que una tool sin Tailwind
+(HTML estático, Jinja2) necesita tal cual. Es la misma hoja que usa el playground
+(§10); si cambia aquí, cambia allí en el mismo commit.
+
+```css
+/* ── Color de categoría (§2.3 regla 2, §14.4): la clase fija --c y el componente lo consume ── */
+.c-author  { --c: var(--accent-author); }
+.c-factory { --c: var(--accent-factory); }
+.c-skills  { --c: var(--accent-skills); }
+.c-lms     { --c: var(--accent-lms); }
+.c-engage  { --c: var(--accent-engage); }
+.c-game    { --c: var(--accent-game); }
+.c-sky     { --c: var(--deco-sky); }
+.c-blue    { --c: var(--deco-blue); }
+.c-violet  { --c: var(--deco-violet); }
+.c-lime    { --c: var(--deco-lime); }
+.c-mint    { --c: var(--deco-mint); }
+.c-gold    { --c: var(--deco-gold); }
+.c-amber   { --c: var(--deco-amber); }
+.c-orange  { --c: var(--deco-orange); }
+.c-rose    { --c: var(--deco-rose); }
+.c-slate   { --c: var(--deco-slate); }
+
+/* ── §5.8.1 Badge ── */
+.badge { display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 0.375rem; padding: 0.125rem 0.5rem; font-size: 0.75rem; font-weight: 500; line-height: 1.4; }
+.badge-default { background: hsl(var(--muted)); color: hsl(var(--text-subtle)); }
+.badge-info { background: hsl(var(--accent) / 0.15); color: hsl(var(--accent)); }
+.badge-success { background: hsl(var(--success) / 0.15); color: hsl(var(--success)); }
+.badge-warning { background: hsl(var(--warning) / 0.15); color: hsl(var(--warning)); }
+.badge-destructive { background: hsl(var(--destructive) / 0.15); color: hsl(var(--destructive)); }
+.badge-brand { background: hsl(var(--primary) / 0.1); color: hsl(var(--primary)); }
+.badge-dot { display: inline-block; width: 0.375rem; height: 0.375rem; border-radius: 9999px; background: currentColor; }
+/* Variante de categoría: punto en --c, fondo tenue, texto de título */
+.badge-category { background: hsl(var(--c) / 0.14); color: hsl(var(--text-heading)); }
+.badge-category::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: 9999px; background: hsl(var(--c)); flex-shrink: 0; }
+a.badge-category:hover { background: hsl(var(--c) / 0.24); }
+
+/* ── §5.8.2 Tag ── */
+.tag { display: inline-flex; align-items: center; gap: 0.375rem; border-radius: 9999px; padding: 0.25rem 0.75rem; background: hsl(var(--muted)); color: hsl(var(--text-body)); font-size: 0.875rem; }
+.tag-close { cursor: pointer; color: hsl(var(--text-soft)); transition: color 150ms; background: none; border: none; padding: 0; display: inline-flex; }
+.tag-close:hover { color: hsl(var(--text-body)); }
+
+/* ── §5.8.4 Icon tile (icono sobre su tinte; métricas y listados operativos) ── */
+.icon-tile { width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 1.25rem; color: hsl(var(--c, var(--primary))); background: hsl(var(--c, var(--primary)) / 0.12); }
+.icon-tile-sm { width: 2rem; height: 2rem; font-size: 1rem; border-radius: 0.375rem; }
+
+/* ── §5.10.1 Alerts ── */
+.alert { display: flex; align-items: flex-start; gap: 0.75rem; border: 1px solid; border-radius: 0.5rem; padding: 1rem; }
+.alert-info { border-color: hsl(var(--accent) / 0.3); background: hsl(var(--accent) / 0.05); }
+.alert-info .alert-icon, .alert-info .alert-title { color: hsl(var(--accent)); }
+.alert-success { border-color: hsl(var(--success) / 0.3); background: hsl(var(--success) / 0.05); }
+.alert-success .alert-icon, .alert-success .alert-title { color: hsl(var(--success)); }
+.alert-warning { border-color: hsl(var(--warning) / 0.3); background: hsl(var(--warning) / 0.1); }
+.alert-warning .alert-icon, .alert-warning .alert-title { color: hsl(var(--warning)); }
+.alert-destructive { border-color: hsl(var(--destructive) / 0.3); background: hsl(var(--destructive) / 0.05); }
+.alert-destructive .alert-icon, .alert-destructive .alert-title { color: hsl(var(--destructive)); }
+.alert-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 0.125rem; }
+.alert-title { font-size: 0.875rem; font-weight: 600; }
+.alert-body { font-size: 0.875rem; color: hsl(var(--text-subtle)); margin-top: 0.25rem; }
+
+/* ── §5.10.2 Toast (posicionar con .toast-stack; z-60 de §4.5) ── */
+.toast-stack { position: fixed; bottom: 1rem; right: 1rem; z-index: 60; display: flex; flex-direction: column; gap: 0.5rem; }
+.toast { display: flex; align-items: flex-start; gap: 0.75rem; border-radius: 0.5rem; border: 1px solid hsl(var(--border)); background: hsl(var(--card)); padding: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); min-width: 320px; max-width: 28rem; }
+
+/* ── §5.10.3 Save bar (feedback inline; elev-2 de §4.4, z-10 de §4.5) ── */
+.save-bar { position: sticky; bottom: 1rem; z-index: 10; margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0.625rem 1rem; border-radius: 0.5rem; border: 1px solid hsl(var(--border)); background: hsl(var(--card)); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.save-bar-dirty { border-color: hsl(var(--warning) / 0.5); }
+.save-bar-status { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0; font-size: 0.875rem; color: hsl(var(--text-subtle)); }
+.save-bar-actions { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+/* ── §5.11 Dialog (elev-3 de §4.4; backdrop z-40, content z-50) ── */
+.dialog-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 40; }
+.dialog { position: relative; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.15); width: 100%; }
+.dialog-floating { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 50; max-height: calc(100vh - 4rem); overflow-y: auto; }
+.dialog-sm { max-width: 24rem; }
+.dialog-md { max-width: 32rem; }
+.dialog-lg { max-width: 42rem; }
+.dialog-xl { max-width: 56rem; }
+
+/* ── §5.14 Tables ── */
+.table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.table thead { background: hsl(var(--gray-50)); border-bottom: 1px solid hsl(var(--border)); }
+.table th { text-align: left; font-weight: 500; color: hsl(var(--text-subtle)); text-transform: uppercase; letter-spacing: 0.025em; font-size: 0.75rem; padding: 0.75rem 1rem; white-space: nowrap; }
+.table td { padding: 0.875rem 1rem; border-bottom: 1px solid hsl(var(--border)); color: hsl(var(--text-body)); }
+.table tbody tr:hover { background: hsl(var(--gray-50)); }
+.table tbody tr[aria-selected="true"] { background: hsl(var(--brand-magenta-soft)); }
+.table tbody tr:last-child td { border-bottom: none; }
+.table-compact th { padding: 0.625rem 0.75rem; }
+.table-compact td { padding: 0.5rem 0.75rem; font-size: 0.8125rem; }
+.table-sticky thead { position: sticky; top: 0; z-index: 10; }
+/* Cabecera de la columna "hoy" (§5.14.4): texto primary + raya inferior de tab-pills; las celdas no se colorean */
+.table th.today { color: hsl(var(--primary)); box-shadow: inset 0 -2px 0 hsl(var(--primary)); }
+/* Marca lateral de fila por categoría (§14.4) */
+.table tr.row-category td:first-child { box-shadow: inset 3px 0 0 hsl(var(--c)); }
+
+/* ── §5.14.4 Table editable (campo por celda, estados, totales) ── */
+.table-editable td { padding: 0.25rem 0.375rem; }
+.table-editable .cell-input { width: 4rem; height: 2rem; padding: 0 0.5rem; text-align: right; font-family: inherit; font-size: 0.875rem; font-variant-numeric: tabular-nums; color: hsl(var(--text-body)); background: transparent; border: 1px solid transparent; border-radius: 0.375rem; outline: none; transition: border-color 150ms, box-shadow 150ms, background-color 150ms; }
+.table-editable .cell-input:hover:not(:disabled) { border-color: hsl(var(--gray-400)); }
+.table-editable .cell-input:focus { border-color: hsl(var(--primary)); box-shadow: 0 0 0 2px hsl(var(--primary) / 0.15); }
+.table-editable .cell-input.cell-modified { background: hsl(var(--brand-magenta-soft)); }
+.table-editable .cell-input[aria-invalid="true"] { border-color: hsl(var(--destructive)); background: hsl(var(--destructive) / 0.05); color: hsl(var(--destructive)); }
+.table-editable .cell-input:disabled { color: hsl(var(--text-disabled)); cursor: not-allowed; }
+.table-editable .col-off { background: hsl(var(--gray-100)); }
+.table-editable .col-total, .table-editable tfoot td { background: hsl(var(--muted)); color: hsl(var(--text-heading)); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.table-editable tr.row-removed td:not(:last-child) { opacity: 0.55; }
+.table-editable tr.row-removed .row-label { text-decoration: line-through; }
+
+/* ── §5.15 Dropdown (elev-2; z-20 de §4.5) ── */
+.dropdown { position: relative; }
+.dropdown summary { list-style: none; cursor: pointer; }
+.dropdown summary::-webkit-details-marker { display: none; }
+.dropdown-menu { position: absolute; right: 0; top: calc(100% + 0.25rem); z-index: 20; min-width: 12rem; border-radius: 0.375rem; border: 1px solid hsl(var(--border)); background: hsl(var(--card)); padding: 0.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.dropdown-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; color: hsl(var(--text-body)); border-radius: 0.25rem; cursor: pointer; background: none; border: none; width: 100%; text-align: left; font-family: inherit; }
+.dropdown-item:hover { background: hsl(var(--muted)); }
+.dropdown-item-destructive { color: hsl(var(--destructive)); }
+.dropdown-item-destructive:hover { background: hsl(var(--destructive) / 0.1); }
+.dropdown-label { padding: 0.375rem 0.75rem; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em; color: hsl(var(--text-soft)); }
+.dropdown-separator { margin: 0.25rem 0; height: 1px; background: hsl(var(--border)); }
+
+/* ── §5.16 Popover ── */
+.popover { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 0.5rem; padding: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 18rem; }
+
+/* ── §5.18 Tabs internas ── */
+.tabs-segmented { display: inline-flex; align-items: center; border-radius: 0.5rem; background: hsl(var(--muted)); padding: 0.25rem; gap: 0.25rem; }
+.tabs-segmented .tab { padding: 0.375rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; color: hsl(var(--text-subtle)); background: transparent; border: none; cursor: pointer; transition: all 150ms; font-family: inherit; }
+.tabs-segmented .tab:hover { color: hsl(var(--text-body)); }
+.tabs-segmented .tab-active { background: hsl(var(--card)); color: hsl(var(--text-body)); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.tabs-underline { display: flex; border-bottom: 1px solid hsl(var(--border)); gap: 1rem; }
+.tabs-underline .tab { padding: 0.5rem 0.25rem; font-size: 0.875rem; font-weight: 500; color: hsl(var(--text-subtle)); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 150ms; margin-bottom: -1px; font-family: inherit; }
+.tabs-underline .tab:hover { color: hsl(var(--text-body)); }
+.tabs-underline .tab-active { color: hsl(var(--text-heading)); border-bottom-color: hsl(var(--primary)); }
+
+/* ── §5.4.14 Choice pills (selección única con radios nativos) ── */
+.choice-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.choice-pill { position: relative; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; border-radius: 9999px; padding: 0.375rem 0.875rem; font-size: 0.875rem; font-weight: 500; background: hsl(var(--background)); color: hsl(var(--text-subtle)); border: 1px solid hsl(var(--border)); transition: background-color 150ms, border-color 150ms, color 150ms; }
+.choice-pill input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip: rect(0 0 0 0); pointer-events: none; }
+.choice-pill:hover { color: hsl(var(--text-body)); border-color: hsl(var(--primary) / 0.4); }
+.choice-pill:has(input:checked) { background: hsl(var(--primary)); border-color: hsl(var(--primary)); color: white; }
+.choice-pill:has(input:focus-visible) { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+/* Con color de categoría (añadir .choice-pill-category + .c-*) */
+.choice-pill-category::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: hsl(var(--c)); flex-shrink: 0; }
+.choice-pill-category:hover { background: hsl(var(--c) / 0.14); border-color: hsl(var(--c) / 0.6); }
+.choice-pill-category:has(input:checked) { background: hsl(var(--c) / 0.18); border-color: hsl(var(--c)); color: hsl(var(--text-heading)); }
+
+/* ── §14.2 Campo compacto (36 px = btn-sm) ── */
+.field-input-sm { height: 2.25rem; padding: 0 0.75rem; font-size: 0.875rem; }
+textarea.field-input-sm { height: auto; min-height: 3.75rem; padding: 0.5rem 0.75rem; }
+select.field-input-sm { padding-right: 2.25rem; background-position: right 0.625rem center; }
+```
+
+Reglas:
+
+- `.field-input-sm`, `.table-compact`, `.table-editable`, `.save-bar` y
+  `.choice-pills` son las piezas del **modo operativo** (§14). Fuera de ese modo
+  se usan los tamaños de §5.
+- Las variantes de categoría (`badge-category`, `row-category`,
+  `choice-pill-category`, `icon-tile`) **requieren** una clase `.c-*` en el mismo
+  elemento o en un ancestro. Sin `--c` no pintan (salvo `icon-tile`, que cae a
+  `--primary`).
+- En modo oscuro no hay nada que cambiar: los `--deco-*` y `--accent-*` no
+  cambian (§2.8) y los tintes al 12-18 % funcionan sobre fondo oscuro.
+
 ### 12.5 Resumen
 
 Si las tools consumidoras prefieren no copiar todo este CSS, las alternativas son:
@@ -3086,8 +3414,9 @@ exactamente igual que en cualquier tool.
 
 ¿El usuario abre la tool para **leer y explorar números** (filtrar por fechas o
 dimensiones, comparar periodos, mirar gráficas y tablas)? → modo dashboard.
-¿La tool es una web, landing, formulario o app de flujo (crear, editar,
-tramitar)? → modo web clásico (§4/§5 tal cual).
+¿La tool es de **edición y registro diario** (rejillas, formularios, guardar —
+test en §14.1)? → modo app operativa (§14). ¿Es una web, landing o flujo
+puntual? → modo web clásico (§4/§5 tal cual).
 
 En caso de duda: si la pantalla principal tiene más de 3 cifras con gráficas y
 un control de fechas, es un dashboard.
@@ -3140,8 +3469,24 @@ Reglas:
    con el signo ajustado a si subir es bueno.
 5. **Magnitud** (heatmaps, mapas) usa la rampa secuencial `DASH_SEQ` de un solo
    tono — nunca un arcoíris.
-6. **Nunca doble eje** (dos escalas Y): dos medidas de escala distinta van en
-   dos gráficas o indexadas a base común.
+6. **Doble eje (dos escalas Y) solo con todas estas condiciones**; si falla
+   una, dos gráficas, paneles con eje X compartido o índice común (§13.4):
+   1. Las dos medidas están **relacionadas por construcción** (parte y total,
+      volumen y tasa derivada), no dos series independientes cuya correlación
+      se quiera sugerir.
+   2. **Una serie en barras y la otra en línea**; nunca dos líneas (el ojo las
+      compararía como magnitudes iguales).
+   3. **Los dos ejes empiezan en cero**.
+   4. Cada eje rotula su **unidad** y lleva la **marca de color** de su serie
+      junto al título del eje (marca, no texto en color: regla 7).
+   5. La **leyenda dice a qué eje** va cada serie.
+   6. La **proporción entre ejes se fija en código** (máximos fijos o ratio
+      fijo) y no se recalcula al filtrar: la misma gráfica no puede contar
+      historias distintas según el filtro.
+   7. La **descripción de una línea** (§13.2) explica qué mide cada eje.
+   Por qué tantas: la alineación de dos escalas es arbitraria y fabrica cruces
+   y pendientes que no están en el dato; estas condiciones la acotan. Es el
+   criterio con el que Datawrapper acabó permitiéndolo tras años de negarse.
 7. **El texto nunca viste el color de la serie**: etiquetas, valores y leyendas
    en tokens de texto (§2.6); la identidad la da la marca de color al lado.
 
@@ -3168,6 +3513,9 @@ Reglas:
 | ¿Qué esconde la media? | **Swarm/BoxPlot** por unidad | Escala log; si se muestrea, se declara. |
 | ¿Composición jerárquica de importe? | **Treemap** | Área = importe; color = grupo padre. |
 | ¿Perfil multi-métrica comparado? | **Radar** | Máximo 4 series. |
+| ¿Una parte pequeña frente a un total grande, misma unidad? | **Doble eje** (barras + línea) | Solo con las 7 condiciones de §13.3.6, impuestas por diseño en el kit (`DualAxis`: no deja quitar el cero ni elegir dos líneas). Si falla una, la fila siguiente. |
+| Lo mismo, sin cumplir las condiciones | **Paneles con eje X compartido** | Dos gráficas apiladas, mismo eje X y ancho, crosshair y tooltip únicos; cada panel con su eje Y desde cero y su unidad; el panel de la parte puede ir apilado por dimensión. |
+| ¿Cuánto representa la parte sobre el total? | **Ratio** (línea de % o KPI tile) | Si la pregunta es la proporción, no hace falta ver las dos magnitudes: parte / total en pp (§13.5). |
 
 Regla general: **la forma primero, el color después**. Y si la pregunta se
 responde con un número, es un tile — no una gráfica.
@@ -3215,8 +3563,10 @@ responde con un número, es un tile — no una gráfica.
 
 1. **Scroll infinito de tarjetas idénticas** — 20+ KPIs con el mismo peso visual.
    Jerarquía de 3 rangos (§13.2) o tabla.
-2. **Doble eje Y** — puede fabricar correlaciones que no existen. Dos gráficas o
-   índice común.
+2. **Doble eje sin las condiciones de §13.3.6** (dos líneas, un eje recortado,
+   proporción que cambia al filtrar) — fabrica cruces y correlaciones que no
+   existen. Si no se cumplen todas, paneles con eje X compartido, dos gráficas o
+   índice común (§13.4).
 3. **Párrafos metodológicos en superficie** — a tooltips; en pantalla, una línea.
 4. **Multi-serie sin leyenda** ni etiquetas — la identidad nunca depende solo
    del color.
@@ -3253,3 +3603,109 @@ cuando maduren con uso real se extraerán a un template compartido
 (`dashboard-tool-template`) y esta sección lo referenciará. El CLAUDE.md de
 todo proyecto dashboard nuevo debe incluir la fila "dashboard → §13" en su
 tabla de consumo del design system.
+
+---
+
+## 14. Modo app operativa (tools de edición y registro)
+
+Doctrina específica para tools cuyo contenido principal son **datos que se
+introducen, corrigen y guardan** a diario: rejillas de horas, altas, validaciones,
+listados con acciones. Nacida de la primera tool de registro de horas (2026-10),
+donde la primera versión salió "con demasiado aire" y hubo que fijar los valores a
+mano en una segunda vuelta.
+
+**Regla de precedencia**: en modo operativo, esta sección **manda sobre §4
+(layout) y §5 (componentes)** donde entren en conflicto. Los tokens de color (§2),
+la tipografía (§3) y los datos canónicos (§6) aplican exactamente igual. Si la tool
+es además un dashboard (test de §13.1), §13 manda en sus vistas de datos y §14 en
+sus vistas de edición.
+
+### 14.1 Cuándo aplica (test de 10 segundos)
+
+¿La persona abre la tool a diario para **introducir o corregir datos** en tablas,
+rejillas o formularios, y se la sabe de memoria? → modo operativo.
+¿La abre para **leer y explorar números**? → §13.
+¿Es una landing, un formulario puntual (login, alta única) o un flujo guiado? →
+modo web (§4/§5 tal cual).
+
+En caso de duda: si la pantalla principal tiene una tabla o rejilla editable y un
+botón de guardar, es operativa.
+
+### 14.2 Overrides de densidad
+
+| Regla web | En modo operativo |
+|---|---|
+| `.table` con padding `0.875rem 1rem` (§5.14.2) | **`.table-compact` por defecto**: `th` `0.625rem 0.75rem`, `td` `0.5rem 0.75rem`, 13 px. |
+| `.field-input` de 44 px (§5.7.2) | **`.field-input-sm`**: 36 px (`h-9`), `px-3`, `text-sm`. Misma altura que `btn-sm`, para alinear campos y botones en una fila. `textarea.field-input-sm`: `min-h-[60px]`, `py-2`. |
+| Campo dentro de tabla (§5.7.5) | **`table-editable`** (§5.14.4): celda `px-1.5 py-1`, campo `h-8`, ancho por contenido. |
+| `btn-md` por defecto (§5.6.2) | **`btn-sm` por defecto**; icon-only `size-9` (§5.6.4). `btn-md` solo para la acción principal de la pantalla (Guardar). |
+| `space-y-5` entre campos (§5.7.4) | `space-y-4` y labels `text-sm` (ya previsto en §5.7.4 para >10 campos; aquí es el default). |
+| `stat-block` (§5.4.8) | **Sección de métricas operativas** (§5.1): card `p-6`, grid 2/4, cada métrica con un `icon-tile` (§5.8.4) de su color de categoría. |
+| `space-y-16` entre secciones (§4.2) | `space-y-8`. Una pantalla operativa cabe en 1440×900 sin más scroll que el de la tabla. |
+| Toast en esquina (§5.10.2) | **Feedback inline** (§5.10.3): el resultado aparece donde estaba la acción. Toast solo para acciones sin sitio fijo en pantalla. |
+
+### 14.3 Interacción
+
+1. **Intro en una rejilla baja de celda**, como en una hoja de cálculo; guardar es
+   siempre un botón. En un formulario de uno o dos campos, Intro envía
+   (comportamiento nativo: no lo desactives).
+2. **Las confirmaciones nombran la acción**: "Sí, descartar", "Sí, registrarla",
+   "Corregir". Nunca "Aceptar". La pregunta también es concreta ("¿Es correcta?"
+   en vez de "¿Registrar igualmente?"). §5.11 ya lo hace por ejemplo; aquí es regla.
+3. **Los errores persisten hasta que se resuelven**. No se autodescartan (coherente
+   con §5.10.1 y con "cuándo no usar toast" de §5.10.2).
+4. **El feedback de una acción aparece donde estaba la acción** y se queda 6 s si
+   es éxito (`save-bar`, §5.10.3). Una alerta arriba de la página no se ve cuando
+   la persona está mirando la fila que acaba de editar.
+5. **Salir con cambios sin guardar** pide confirmación con tres opciones (§5.11,
+   variante "salida con cambios").
+6. **Defaults predecibles**: fecha "desde" = hoy; selección = la última usada o la
+   primera; nunca un valor derivado de otro dato que la persona no ve.
+7. **Pocas opciones, todas visibles**: hasta 8 opciones, `choice-pills` (§5.4.14)
+   en vez de un desplegable.
+
+### 14.4 Color en pantallas operativas
+
+Una pantalla operativa sale "sosa" cuando todo es gris y magenta. Regla: si hay
+**métricas**, cada una lleva un `icon-tile` con un color de §2.4 fijo y en orden
+estable (§2.4 regla 2). Si hay **categorías** (tipos, líneas, estados de negocio),
+cada una tiene un color de §2.4 fijo (§2.3 regla 2) y lo lleva **en todos los
+sitios** donde aparece: `badge-category` en la etiqueta, marca lateral
+`row-category` en la tabla y punto en la `choice-pill` para elegirla.
+Implementación: las clases `.c-*` de §12.6 fijan la variable `--c` que consumen
+esos componentes; el mapeo categoría → clase vive en código y no cambia.
+
+### 14.5 Anti-patrones operativos (el §5.5 de este modo)
+
+1. **Padding web en una rejilla** (celdas de 14 px de padding con campos dentro).
+2. **`btn-md` en acciones de fila o en toolbars**; es `btn-sm`.
+3. **Intro que guarda sin querer** en una rejilla.
+4. **Éxito que desaparece antes de leerse** o que aparece lejos de la acción.
+5. **Error que se autodescarta**.
+6. **"Aceptar" / "Cancelar"** como únicos textos de un diálogo.
+7. **Una columna entera coloreada** para marcar "hoy" en una rejilla con campos
+   (contrasta mal con el fondo de los campos): se marca la cabecera (§5.14.4).
+8. **Todo gris y magenta** en métricas y categorías (§14.4).
+9. **Parámetros a mano para probar variantes**: control visible en la UI, como en
+   §13.8.10.
+
+### 14.6 Cómo consumir esta sección
+
+**Si estás construyendo una tool operativa** (test de §14.1): lee §14.2 y §14.3
+SIEMPRE antes de la primera pantalla; §14.4 al colorear métricas y categorías;
+§14.5 como checklist final, igual que §5.5 en modo web.
+
+| Necesitas | Lee |
+|---|---|
+| Saber si esta sección te aplica | §14.1 |
+| Tamaños de tabla, campo y botón | §14.2 + §12.6 |
+| Rejilla editable, totales, marca de hoy | §5.14.4 |
+| Barra de guardado y feedback inline | §5.10.3 |
+| Diálogo de salida con cambios | §5.11 |
+| Color de métricas y categorías | §14.4 + §2.3/§2.4 + §5.8 |
+| Selección única con pocas opciones | §5.4.14 (`choice-pills`) |
+| Checklist final | §14.5 |
+
+El CLAUDE.md de todo proyecto operativo debe incluir la fila "app operativa → §14"
+en su tabla de consumo del design system (la plantilla del README ya la trae). La
+implementación de referencia de todas las piezas vive en el playground (§10).
